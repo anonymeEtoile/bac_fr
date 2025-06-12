@@ -77,14 +77,14 @@
 
         .nav-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Adjusted minmax for more buttons */
             gap: 15px;
         }
 
         .nav-btn {
             background: linear-gradient(45deg, #ff6b6b, #ee5a24);
             color: white;
-            padding: 12px 20px;
+            padding: 12px 15px; /* Adjusted padding */
             border: none;
             border-radius: 10px;
             cursor: pointer;
@@ -93,6 +93,7 @@
             text-decoration: none;
             text-align: center;
             display: block;
+            font-size: 0.9em; /* Adjusted font size */
         }
 
         .nav-btn:hover {
@@ -124,8 +125,15 @@
         .section h3 {
             color: #764ba2;
             font-size: 1.4em;
-            margin: 20px 0 15px 0;
+            margin: 25px 0 15px 0;
         }
+        
+        .section h4 {
+            color: #333;
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+        }
+
 
         .highlight-box {
             background: linear-gradient(135deg, #667eea, #764ba2);
@@ -134,6 +142,13 @@
             border-radius: 15px;
             margin: 20px 0;
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .highlight-box ul, .highlight-box ol {
+            padding-left: 20px;
+        }
+        .highlight-box li {
+            margin-bottom: 5px;
         }
 
         .steps-grid {
@@ -187,6 +202,15 @@
             padding: 15px;
             border-bottom: 1px solid #eee;
         }
+        
+        td ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+        td li {
+            margin-bottom: 5px;
+        }
+
 
         tr:hover {
             background: #f8f9ff;
@@ -206,6 +230,10 @@
             border-radius: 15px;
             transition: all 0.3s ease;
         }
+        .procede-card ul {
+            list-style-position: inside;
+            padding-left: 0;
+        }
 
         .procede-card:hover {
             transform: translateY(-5px);
@@ -215,6 +243,11 @@
         .tips-list {
             list-style: none;
             padding: 0;
+        }
+        .tips-list ul { /* For nested lists within tips-list */
+             list-style: disc;
+             padding-left: 20px;
+             margin-top: 5px;
         }
 
         .tips-list li {
@@ -239,6 +272,11 @@
             margin: 20px 0;
             border-left: 5px solid #ff6b6b;
         }
+        .warning ul {
+            list-style-position: inside;
+            padding-left: 0;
+        }
+
 
         .success {
             background: linear-gradient(45deg, #56ffa4 0%, #59bc86 100%);
@@ -285,13 +323,23 @@
             }
             
             .nav-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Further adjust for small screens */
+            }
+            .nav-btn {
+                font-size: 0.85em;
+                padding: 10px 12px;
             }
             
             .section {
                 padding: 20px;
             }
         }
+        @media (max-width: 480px) {
+            .nav-grid {
+                grid-template-columns: 1fr; /* Stack buttons on very small screens */
+            }
+        }
+
 
         .fade-in {
             opacity: 0;
@@ -318,9 +366,10 @@
         <nav>
             <div class="nav-grid">
                 <a href="#objectifs" class="nav-btn">🎯 Objectifs</a>
-                <a href="#methode" class="nav-btn">📋 Méthode en 8 étapes</a>
+                <a href="#methode" class="nav-btn">📋 Méthode</a>
                 <a href="#structure" class="nav-btn">🏗️ Structure</a>
-                <a href="#procedes" class="nav-btn">✨ Procédés littéraires</a>
+                <a href="#procedes" class="nav-btn">✨ Procédés</a>
+                <a href="#parcours-analyse" class="nav-btn">🔎 Analyse / Parcours</a>
                 <a href="#conseils" class="nav-btn">💡 Conseils</a>
                 <a href="#preparation" class="nav-btn">📖 Préparation</a>
             </div>
@@ -452,31 +501,31 @@
                 <div class="procede-card">
                     <h3>🎨 Procédés lexicaux</h3>
                     <ul>
-                        <li><strong>Champs lexicaux :</strong> groupes de mots liés au même thème</li>
-                        <li><strong>Connotation :</strong> jeu sur le sens figuré</li>
-                        <li><strong>Niveaux de langue :</strong> familier, courant, soutenu</li>
-                        <li><strong>Nuances :</strong> mélioratif ou péjoratif</li>
+                        <li>Champs lexicaux</li>
+                        <li>Connotation</li>
+                        <li>Niveaux de langue</li>
+                        <li>Nuances mélioratives/péjoratives</li>
                     </ul>
                 </div>
 
                 <div class="procede-card">
                     <h3>📝 Procédés grammaticaux</h3>
                     <ul>
-                        <li><strong>Types de phrases :</strong> déclarative, exclamative, interrogative, injonctive</li>
-                        <li><strong>Temps verbaux :</strong> et leurs valeurs spécifiques</li>
-                        <li><strong>Syntaxe :</strong> expression des circonstances</li>
-                        <li><strong>Structures :</strong> simples ou complexes</li>
+                        <li>Types de phrases</li>
+                        <li>Temps verbaux et valeurs</li>
+                        <li>Syntaxe (circonstances)</li>
+                        <li>Structures simples/complexes</li>
                     </ul>
                 </div>
 
                 <div class="procede-card">
                     <h3>🎭 Figures de style</h3>
                     <ul>
-                        <li><strong>Métaphore/Comparaison :</strong> créent des images mentales</li>
-                        <li><strong>Hyperbole :</strong> exagération pour insister</li>
-                        <li><strong>Répétition :</strong> insiste sur une idée</li>
-                        <li><strong>Allitération/Assonance :</strong> effets sonores</li>
-                        <li><strong>Antithèse :</strong> opposition de deux idées</li>
+                        <li>Métaphore/Comparaison</li>
+                        <li>Hyperbole</li>
+                        <li>Répétition</li>
+                        <li>Allitération/Assonance</li>
+                        <li>Antithèse</li>
                     </ul>
                 </div>
             </div>
@@ -484,6 +533,224 @@
             <div class="success">
                 <strong>💡 Conseil clé :</strong> Ne vous contentez pas d'identifier les procédés ! Expliquez toujours leur effet sur le lecteur. Par exemple : "L'allitération en 'r' imite le bruit du vent, renforçant l'impression de chaos."
             </div>
+        </section>
+
+        <section id="parcours-analyse" class="section fade-in">
+            <h2>🔎 Analyse Spécifique par Objet d'Étude (Parcours 2025)</h2>
+            <p>Pour réussir votre commentaire de texte au bac de français 2025, il est essentiel de maîtriser les spécificités techniques et stylistiques de chaque objet d'étude. Chaque parcours correspond à un type spécifique de texte (poésie, théâtre, roman et récit, littérature d’idées) et est associé à une œuvre avec un thème ou une problématique particulière. Ces parcours guident l’analyse et nécessitent une attention particulière aux procédés littéraires en lien avec les thèmes proposés.</p>
+            <p>Le programme du baccalauréat 2025 en français inclut quatre objets d’étude principaux : la poésie du XIXe siècle au XXIe siècle, la littérature d’idées du XVIe siècle au XVIIIe siècle, le roman et le récit du Moyen-Âge au XXIe siècle, et le théâtre du XVIIe siècle au XXIe siècle. Pour le commentaire, l'objectif est d’analyser un extrait en montrant comment la forme (procédés littéraires) produit des effets sur le lecteur, tout en reliant cette analyse aux thèmes du parcours.</p>
+
+            <h3>🎭 Le théâtre du XVIIe siècle au XXIe siècle</h3>
+            <h4>Aspects techniques fondamentaux :</h4>
+            <ul class="tips-list">
+                <li><strong>Versification :</strong> Essentielle pour les pièces classiques. L'alexandrin (12 syllabes) est central.
+                    <ul>
+                        <li><strong>Hémistiches :</strong> Les deux moitiés de l'alexandrin (6 syllabes chacune), séparées par une césure. Analyser comment la césure marque une unité de sens ou un rythme, renforçant l'effet dramatique.</li>
+                        <li><strong>Rimes :</strong> Plates, croisées, embrassées. Leur analyse aide à comprendre comment le texte soutient les thèmes du parcours.</li>
+                    </ul>
+                </li>
+                <li><strong>Structure dramatique :</strong> Situer l'extrait (exposition, nœud, dénouement) et son rôle dans la tension.</li>
+                <li><strong>Dialogue et caractérisation :</strong> Comment les répliques révèlent personnages, intentions, relations.</li>
+                <li><strong>Effets dramatiques :</strong> Didascalies, impact du langage (vers/prose) sur le spectateur.</li>
+            </ul>
+            <h4>Procédés et registres spécifiques :</h4>
+            <ul class="tips-list">
+                <li><strong>Registres dominants :</strong> Comique (répétition, quiproquo, exagération), tragique (lexique de la fatalité, désespoir, exclamations, interrogations, apostrophes), dramatique.</li>
+            </ul>
+            <h4>Œuvres au programme 2025 et parcours associés :</h4>
+            <div class="highlight-box">
+                <ul>
+                    <li><strong>Pierre Corneille, <em>Le Menteur</em></strong> (Parcours : "mensonge et comédie")</li>
+                    <li><strong>Alfred de Musset, <em>On ne badine pas avec l’amour</em></strong> (Parcours : "les jeux du cœur et de la parole")</li>
+                    <li><strong>Nathalie Sarraute, <em>Pour un oui ou pour un non</em></strong> (Parcours : "théâtre et dispute")</li>
+                </ul>
+            </div>
+
+            <h3>📜 La poésie du XIXe siècle au XXIe siècle</h3>
+            <h4>Analyse de la versification et forme :</h4>
+            <ul class="tips-list">
+                <li><strong>Forme du poème :</strong> Sonnet, forme libre, calligramme, etc.</li>
+                <li><strong>Mètre :</strong> Octosyllabe, décasyllabe, alexandrin, vers libres. Les vers libres peuvent refléter une rupture avec les conventions (ex: Rimbaud).</li>
+                <li><strong>Rimes :</strong>
+                    <ul>
+                        <li><strong>Richesse :</strong> Pauvres (1 son), suffisantes (2 sons), riches (3 sons), léonines (4+ sons).</li>
+                        <li><strong>Genre :</strong> Masculines ou féminines (selon présence d'un 'e' muet final).</li>
+                        <li><strong>Disposition :</strong> Plates (aabb), croisées (abab), embrassées (abba).</li>
+                    </ul>
+                </li>
+                <li><strong>Structure des strophes.</strong></li>
+            </ul>
+            <h4>Figures de style et imagerie :</h4>
+            <ul class="tips-list">
+                <li><strong>Figures d'analogie :</strong> Métaphores, comparaisons.</li>
+                <li><strong>Effets sonores :</strong> Allitérations, assonances.</li>
+                <li><strong>Procédés d'amplification ou d'atténuation.</strong></li>
+                <li><strong>Champs lexicaux :</strong> Et leurs effets sur le lecteur.</li>
+            </ul>
+            <h4>Ton et voix :</h4>
+            <ul class="tips-list">
+                <li><strong>Registre lyrique :</strong> Expression des sentiments personnels (usage de la 1ère personne, lexique des émotions). Peut aussi être narratif, ironique, etc.</li>
+            </ul>
+            <h4>Œuvres au programme 2025 et parcours associés :</h4>
+            <div class="highlight-box">
+                <ul>
+                    <li><strong>Arthur Rimbaud, <em>Cahier de Douai</em></strong> (Parcours : "émancipations créatrices")</li>
+                    <li><strong>Francis Ponge, <em>La rage de l’expression</em></strong> (Parcours : "dans l’atelier du poète")</li>
+                    <li><strong>Hélène Dorion, <em>Mes forêts</em></strong> (Parcours : "la poésie, la nature, l’intime")</li>
+                </ul>
+            </div>
+
+            <h3>📖 Le roman et le récit du Moyen Âge au XXIe siècle</h3>
+            <h4>Techniques narratives :</h4>
+            <ul class="tips-list">
+                <li><strong>Type de narrateur :</strong>
+                    <ul>
+                        <li><strong>Interne :</strong> Personnage de l'histoire (principal ou témoin). Point de vue limité.</li>
+                        <li><strong>Externe / Omniscient :</strong> Extérieur à l'histoire, sait tout.</li>
+                    </ul>
+                </li>
+                <li><strong>Voix narrative et point de vue (focalisation).</strong></li>
+                <li><strong>Structure de l'extrait et construction temporelle (chronologie, analepses, prolepses).</strong></li>
+            </ul>
+            <h4>Personnages et intrigue :</h4>
+            <ul class="tips-list">
+                <li><strong>Caractérisation :</strong> Directe (description explicite) ou indirecte (par actions, paroles, pensées). Leur évolution et fonction.</li>
+                <li><strong>Intrigue :</strong> Comment elle se développe et maintient l'intérêt.</li>
+                <li><strong>Thèmes et motifs :</strong> Idées centrales et leur traitement.</li>
+            </ul>
+            <h4>Style et registres romanesques :</h4>
+            <ul class="tips-list">
+                <li><strong>Registres :</strong> Réaliste, pathétique (émouvoir par la souffrance, lexique des émotions, ponctuation expressive), épique (grandeur des personnages/situations), satirique, etc.</li>
+                <li><strong>Choix stylistiques :</strong> Champs lexicaux, figures de style.</li>
+            </ul>
+            <h4>Œuvres au programme 2025 et parcours associés :</h4>
+            <div class="highlight-box">
+                <ul>
+                    <li><strong>Abbé Prévost, <em>Manon Lescaut</em></strong> (Parcours : "personnages en marge, plaisirs du romanesque")</li>
+                    <li><strong>Honoré de Balzac, <em>La Peau de chagrin</em></strong> (Parcours : "les romans de l'énergie : création et destruction")</li>
+                    <li><strong>Colette, <em>Sido</em> suivi de <em>Les Vrilles de la vigne</em></strong> (Parcours : "la célébration du monde")</li>
+                </ul>
+            </div>
+
+            <h3>💡 La littérature d'idées du XVIe au XVIIIe siècle</h3>
+            <h4>Structure et procédés argumentatifs :</h4>
+            <ul class="tips-list">
+                <li><strong>Objectif :</strong> Convaincre (par la raison) ou persuader (par les sentiments).</li>
+                <li><strong>Thèse :</strong> Idée principale défendue par l'auteur.</li>
+                <li><strong>Arguments et exemples :</strong> Preuves et illustrations soutenant la thèse.</li>
+                <li><strong>Organisation logique :</strong> Connecteurs, progression du raisonnement.</li>
+            </ul>
+            <h4>Dispositifs rhétoriques et figures de style :</h4>
+            <ul class="tips-list">
+                <li><strong>Figures d'analogie :</strong> Métaphore argumentative, comparaison.</li>
+                <li><strong>Figures d'insistance :</strong> Répétition, anaphore, parallélisme, dérivation.</li>
+                <li><strong>Figures d'amplification :</strong> Hyperbole, gradation.</li>
+                <li><strong>Figures d'atténuation :</strong> Euphémisme, litote.</li>
+                <li><strong>Figures d'opposition :</strong> Antithèse, oxymore, chiasme.</li>
+                <li><strong>Ironie :</strong> Dire le contraire de ce que l'on pense pour dénoncer.</li>
+            </ul>
+            <h4>Contexte et registres :</h4>
+            <ul class="tips-list">
+                <li><strong>Contexte historique et philosophique :</strong> Relier le texte aux idées de son époque (ex: Lumières, Renaissance).</li>
+                <li><strong>Registres :</strong> Polémique (critiquer vivement), satirique (tourner en ridicule pour dénoncer), ironique, didactique.</li>
+            </ul>
+            <h4>Œuvres au programme 2025 et parcours associés :</h4>
+            <div class="highlight-box">
+                <ul>
+                    <li><strong>François Rabelais, <em>Gargantua</em></strong> (Livres I à XI) (Parcours : "rire et savoir")</li>
+                    <li><strong>Jean de La Bruyère, <em>Les Caractères</em></strong> (Livres V à X) (Parcours : "la comédie sociale")</li>
+                    <li><strong>Olympe de Gouges, <em>Déclaration des droits de la femme et de la citoyenne</em></strong> (du préambule au postambule) (Parcours : "écrire et combattre pour l’égalité")</li>
+                </ul>
+            </div>
+
+            <h3>📊 Tableau récapitulatif des éléments clés par parcours</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Parcours / Objet d'étude</th>
+                            <th>Type de texte</th>
+                            <th>Éléments importants à analyser</th>
+                            <th>Exemple de focus</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Théâtre</strong><br>(mensonge, jeux du cœur, dispute)</td>
+                            <td>Pièce (vers ou prose)</td>
+                            <td>
+                                <ul>
+                                    <li>Versification (alexandrins, hémistiches, césure, rimes)</li>
+                                    <li>Structure dramatique (actes, scènes, exposition, nœud, dénouement)</li>
+                                    <li>Dialogue (répliques, stichomythies, tirades, monologues)</li>
+                                    <li>Didascalies</li>
+                                    <li>Registres (comique, tragique, dramatique)</li>
+                                    <li>Effets sur le spectateur</li>
+                                </ul>
+                            </td>
+                            <td>Analyse des alexandrins et de la progression dramatique dans <em>Le Menteur</em> (Corneille) en lien avec "mensonge et comédie".</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Poésie</strong><br>(émancipation, atelier du poète, nature et intime)</td>
+                            <td>Poème</td>
+                            <td>
+                                <ul>
+                                    <li>Forme (sonnet, vers libres, etc.)</li>
+                                    <li>Versification (mètre, rimes, strophes, rythme)</li>
+                                    <li>Figures de style (métaphores, comparaisons, allitérations, assonances)</li>
+                                    <li>Imagerie et symboles</li>
+                                    <li>Ton et voix poétique (lyrisme, engagement, etc.)</li>
+                                    <li>Relation forme/sens</li>
+                                </ul>
+                            </td>
+                            <td>Étude des vers libres et des images chez Rimbaud (<em>Cahier de Douai</em>) pour illustrer "émancipations créatrices".</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Roman et Récit</strong><br>(marginaux, énergie créatrice/destructrice, célébration du monde)</td>
+                            <td>Extrait narratif</td>
+                            <td>
+                                <ul>
+                                    <li>Statut du narrateur et focalisation</li>
+                                    <li>Structure narrative (ordre du récit, rythme)</li>
+                                    <li>Caractérisation des personnages (physique, morale, sociale)</li>
+                                    <li>Cadre spatio-temporel</li>
+                                    <li>Thèmes et motifs</li>
+                                    <li>Style et registres (réaliste, pathétique, épique, etc.)</li>
+                                </ul>
+                            </td>
+                            <td>Analyse du point de vue narratif et de la construction du personnage marginal dans <em>Manon Lescaut</em> (Abbé Prévost).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Littérature d'idées</strong><br>(rire et savoir, comédie sociale, écrire et combattre)</td>
+                            <td>Texte argumentatif</td>
+                            <td>
+                                <ul>
+                                    <li>Thèse, arguments, exemples</li>
+                                    <li>Structure argumentative (types de raisonnement)</li>
+                                    <li>Procédés rhétoriques (persuasion, conviction)</li>
+                                    <li>Figures de style argumentatives (ironie, hyperbole, antithèse)</li>
+                                    <li>Implication de l'auteur et du destinataire</li>
+                                    <li>Contexte historique, social, philosophique</li>
+                                    <li>Ton et registres (polémique, satirique, didactique)</li>
+                                </ul>
+                            </td>
+                            <td>Examen de la structure argumentative et des procédés de persuasion dans la <em>Déclaration des droits de la femme et de la citoyenne</em> (Olympe de Gouges) en lien avec "écrire et combattre pour l’égalité".</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <h3>📌 Conseils transversaux pour l'analyse</h3>
+            <ul class="tips-list">
+                <li><strong>Identifier le parcours :</strong> Commencez par identifier le type de texte et son parcours pour orienter votre plan. Si c'est du théâtre en vers, une partie sur la versification est pertinente.</li>
+                <li><strong>Citations :</strong> Utilisez des citations précises pour appuyer vos analyses, en expliquant toujours leur effet sur le lecteur ou le spectateur.</li>
+                <li><strong>Lien forme-fond :</strong> Reliez toujours l'analyse des procédés littéraires (la forme) aux thèmes et idées du parcours (le fond) pour une analyse complète et pertinente.</li>
+                <li><strong>Vocabulaire précis :</strong> Utilisez un vocabulaire technique adapté (ex : "alexandrin", "anaphore", "focalisation interne").</li>
+                <li><strong>Effets produits :</strong> Ne vous contentez pas de nommer un procédé, expliquez l'effet qu'il produit dans le texte et par rapport au parcours.</li>
+                <li><strong>Pratique :</strong> Entraînez-vous avec des extraits des œuvres au programme, en appliquant ces grilles d'analyse.</li>
+            </ul>
+
         </section>
 
         <section id="conseils" class="section fade-in">
@@ -529,12 +796,12 @@
                 <li><strong>Fiches de révision :</strong> sur les textes de votre corpus oral avec observations pertinentes</li>
                 <li><strong>Entraînement problématiques :</strong> compétence importante pour écrit et oral</li>
                 <li><strong>Maîtrise des procédés :</strong> connaître les effets des procédés littéraires</li>
-                <li><strong>Pratique régulière :</strong> s'entraîner avec des textes du programme</li>
+                <li><strong>Pratique régulière :</strong> s'entraîner avec des textes du programme en lien avec leur parcours</li>
             </ul>
 
             <h3>Programme 2025 :</h3>
             <div class="highlight-box">
-                <p>Le programme inclut des œuvres renouvelées pour le théâtre (Corneille, Musset, Sarraute), mais la méthodologie reste inchangée. Les notes comptent pour le dossier Parcoursup, rendant cet exercice crucial.</p>
+                <p>Le programme inclut des œuvres pour chaque objet d'étude (poésie, roman, théâtre, littérature d'idées), chacune associée à un parcours spécifique. La méthodologie du commentaire doit s'adapter à ces spécificités. Les notes comptent pour le dossier Parcoursup, rendant cet exercice crucial.</p>
             </div>
 
             <h3>Ressources supplémentaires :</h3>
@@ -576,13 +843,22 @@
         document.querySelectorAll('.nav-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
-                const target = document.querySelector(btn.getAttribute('href'));
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+                const targetId = btn.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    // Calculate offset for sticky nav
+                    const navHeight = document.querySelector('nav').offsetHeight;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight - 20; // 20px for extra margin
+
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
+
 
         // Back to top button
         const backToTopBtn = document.querySelector('.back-to-top');
@@ -602,14 +878,14 @@
             });
         }
 
-        // Animation des cartes au hover
+        // Animation des cartes au hover (removed rotateX for simplicity and better compatibility)
         document.querySelectorAll('.step-card, .procede-card').forEach(card => {
             card.addEventListener('mouseenter', () => {
-                card.style.transform = 'scale(1.05) rotateX(5deg)';
+                card.style.transform = 'scale(1.05)';
             });
             
             card.addEventListener('mouseleave', () => {
-                card.style.transform = 'scale(1) rotateX(0deg)';
+                card.style.transform = 'scale(1)';
             });
         });
     </script>
