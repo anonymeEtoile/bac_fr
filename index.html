@@ -77,14 +77,14 @@
 
         .nav-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Adjusted minmax for more buttons */
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* Adjusted for 8 buttons */
+            gap: 10px; /* Reduced gap */
         }
 
         .nav-btn {
             background: linear-gradient(45deg, #ff6b6b, #ee5a24);
             color: white;
-            padding: 12px 15px; /* Adjusted padding */
+            padding: 10px 12px; /* Adjusted padding */
             border: none;
             border-radius: 10px;
             cursor: pointer;
@@ -93,7 +93,7 @@
             text-decoration: none;
             text-align: center;
             display: block;
-            font-size: 0.9em; /* Adjusted font size */
+            font-size: 0.85em; /* Adjusted font size */
         }
 
         .nav-btn:hover {
@@ -124,14 +124,35 @@
 
         .section h3 {
             color: #764ba2;
-            font-size: 1.4em;
+            font-size: 1.5em; /* Slightly increased for better hierarchy */
             margin: 25px 0 15px 0;
         }
         
         .section h4 {
-            color: #333;
-            font-size: 1.2em;
+            color: #5a67d8; /* Adjusted color for h4 */
+            font-size: 1.3em; /* Adjusted for h4 */
             margin: 20px 0 10px 0;
+        }
+        
+        .section h5 {
+            color: #4a5568; /* Darker grey for h5 */
+            font-size: 1.15em;
+            margin: 15px 0 8px 0;
+        }
+
+        .section h6 {
+            color: #718096; /* Lighter grey for h6 */
+            font-size: 1.05em;
+            margin: 10px 0 5px 0;
+            font-style: italic;
+        }
+
+        blockquote {
+            background: #f8f9ff;
+            border-left: 5px solid #667eea;
+            margin: 15px 0;
+            padding: 10px 20px;
+            font-style: italic;
         }
 
 
@@ -249,6 +270,19 @@
              padding-left: 20px;
              margin-top: 5px;
         }
+         .section ul { /* General ul styling within section if not tips-list */
+            list-style: disc;
+            padding-left: 25px;
+            margin: 10px 0;
+        }
+        .section ol { /* General ol styling */
+            padding-left: 25px;
+            margin: 10px 0;
+        }
+        .section ul li, .section ol li {
+            margin-bottom: 8px;
+        }
+
 
         .tips-list li {
             background: #f8f9ff;
@@ -257,7 +291,16 @@
             border-left: 5px solid #667eea;
             border-radius: 5px;
             transition: transform 0.2s ease;
+            list-style-type: none; /* Ensure no bullet for tips-list items */
         }
+         .tips-list li ul li{ /* nested li inside tips-list li */
+            background: transparent;
+            border-left: none;
+            padding: 0;
+            margin: 5px 0;
+            list-style-type: disc;
+        }
+
 
         .tips-list li:hover {
             transform: translateX(10px);
@@ -286,6 +329,21 @@
             margin: 20px 0;
         }
 
+        .example-block {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            background-color: #fdfdff;
+        }
+         .example-block p, .example-block blockquote {
+             margin-bottom: 10px;
+         }
+         .example-block p:last-child {
+             margin-bottom: 0;
+         }
+
+
         .back-to-top {
             position: fixed;
             bottom: 30px;
@@ -313,6 +371,16 @@
             transform: scale(1.1);
         }
 
+        @media (max-width: 992px) { /* Adjust breakpoint for nav buttons */
+             .nav-grid {
+                grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            }
+             .nav-btn {
+                 font-size: 0.8em;
+             }
+        }
+
+
         @media (max-width: 768px) {
             .container {
                 padding: 10px;
@@ -323,10 +391,10 @@
             }
             
             .nav-grid {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Further adjust for small screens */
+                grid-template-columns: repeat(2, 1fr); /* Two columns for smaller screens */
             }
             .nav-btn {
-                font-size: 0.85em;
+                font-size: 0.85em; /* Can slightly increase now */
                 padding: 10px 12px;
             }
             
@@ -370,6 +438,7 @@
                 <a href="#structure" class="nav-btn">🏗️ Structure</a>
                 <a href="#procedes" class="nav-btn">✨ Procédés</a>
                 <a href="#parcours-analyse" class="nav-btn">🔎 Analyse / Parcours</a>
+                <a href="#redaction-parties" class="nav-btn">✍️ Rédaction Parties</a>
                 <a href="#conseils" class="nav-btn">💡 Conseils</a>
                 <a href="#preparation" class="nav-btn">📖 Préparation</a>
             </div>
@@ -750,6 +819,176 @@
                 <li><strong>Effets produits :</strong> Ne vous contentez pas de nommer un procédé, expliquez l'effet qu'il produit dans le texte et par rapport au parcours.</li>
                 <li><strong>Pratique :</strong> Entraînez-vous avec des extraits des œuvres au programme, en appliquant ces grilles d'analyse.</li>
             </ul>
+        </section>
+
+        <section id="redaction-parties" class="section fade-in">
+            <h2>📝 Comment Bien Rédiger les Parties du Développement</h2>
+            <p>La rédaction des parties constitue le cœur de votre commentaire de texte au bac de français. Une structure claire et une argumentation solide sont essentielles pour démontrer votre maîtrise de l'analyse littéraire et obtenir une bonne note.</p>
+
+            <h3>🏛️ Structure générale du développement</h3>
+            <h4>Organisation des parties</h4>
+            <p>Le développement de votre commentaire doit être organisé en deux ou trois grandes parties, chacune comportant 2 à 3 sous-parties. Cette structure permet de présenter une analyse progressive et cohérente du texte étudié.</p>
+            <p>Votre plan détaillé ressemble donc à ceci :</p>
+            <ul>
+                <li>Introduction</li>
+                <li>I – Premier axe de lecture (2-3 sous-parties)</li>
+                <li>II – Deuxième axe de lecture (2-3 sous-parties)</li>
+                <li>III – Troisième axe de lecture (optionnel, 2-3 sous-parties)</li>
+                <li>Conclusion</li>
+            </ul>
+
+            <h4>Présentation visuelle (sur votre copie d'examen)</h4>
+            <p>Respectez impérativement les règles de présentation qui influencent votre note :</p>
+            <ul>
+                <li>Sautez 2 lignes entre l'introduction et le développement.</li>
+                <li>Sautez 1 ligne entre les grandes parties.</li>
+                <li>Créez un alinéa à chaque début de paragraphe.</li>
+                <li>Ne sautez pas de lignes entre les sous-parties au sein d'une même partie.</li>
+            </ul>
+
+            <h3>🧱 Structure d'une grande partie</h3>
+            <h4>Phrase introductive</h4>
+            <p>Chaque grande partie doit commencer par une phrase introductive annonçant l'idée générale qui sera développée. Cette phrase fait le lien avec votre problématique et présente l'axe de lecture que vous allez explorer.</p>
+
+            <h4>Développement des sous-parties</h4>
+            <p>Chaque sous-partie constitue un paragraphe d'environ 15 lignes qui commence par un alinéa. La structure d'une sous-partie suit toujours le même schéma :</p>
+            <ol>
+                <li><strong>Une idée directrice :</strong> commencez par une phrase annonçant l'idée générale de cette sous-partie.</li>
+                <li><strong>Une explication argumentée :</strong> développez votre argument en analysant les procédés littéraires.</li>
+                <li><strong>Des exemples avec citations :</strong> illustrez par des citations courtes avec numéros de lignes.</li>
+            </ol>
+
+            <h4>Phrase de conclusion</h4>
+            <p>Terminez chaque grande partie par une phrase de conclusion synthétisant l'idée développée. Cette phrase fait le bilan de ce qui vient d'être démontré avant de passer à l'axe suivant.</p>
+
+            <h3>✍️ Techniques de rédaction efficace</h3>
+            <h4>La règle PROCÉDÉS + ANALYSE + CITATION</h4>
+            <p>Respectez impérativement cette règle fondamentale : chaque argument doit combiner l'identification d'un procédé littéraire, son analyse et une citation qui l'illustre. Ne séparez jamais le fond et la forme.</p>
+
+            <h4>Intégration des citations</h4>
+            <p><strong>Choix des citations :</strong> Sélectionnez des passages du texte qui soutiennent directement l'idée développée. Privilégiez des citations courtes et précises.</p>
+            <p><strong>Introduction des citations :</strong> Une citation ne doit jamais être introduite abruptement. Préparez-la avec une phrase explicative en utilisant des formulations comme :</p>
+            <ul>
+                <li>"Cet extrait illustre parfaitement..."</li>
+                <li>"On observe ici que l'auteur..."</li>
+                <li>"Cette citation révèle que..."</li>
+            </ul>
+            <p><strong>Analyse des citations :</strong> Chaque citation doit être accompagnée d'un commentaire expliquant son lien avec la démonstration. Analysez les figures de style, les effets sonores, les procédés grammaticaux en expliquant leurs effets sur le lecteur.</p>
+
+            <h4>Vocabulaire et style</h4>
+            <p>Utilisez un vocabulaire technique précis et spécialisé. Soignez particulièrement :</p>
+            <ul>
+                <li>La ponctuation et la syntaxe.</li>
+                <li>La concordance des temps.</li>
+                <li>Le registre de langue soutenu.</li>
+            </ul>
+
+            <h3>🔗 Transitions entre les parties</h3>
+            <h4>Importance des transitions</h4>
+            <p>Les transitions constituent un lien essentiel entre vos parties. Elles permettent au lecteur de suivre votre raisonnement et vous aident à vérifier la cohérence de votre plan.</p>
+            <h4>Structure d'une transition</h4>
+            <p>Une transition efficace comprend trois éléments :</p>
+            <ol>
+                <li><strong>Bilan :</strong> résumez rapidement ce qui vient d'être démontré.</li>
+                <li><strong>Lien logique :</strong> établissez la connexion avec ce qui va suivre.</li>
+                <li><strong>Annonce :</strong> présentez le nouvel axe qui sera développé.</li>
+            </ol>
+            <h4>Placement des transitions</h4>
+            <p>Vous pouvez placer la transition soit à la fin de la partie précédente, soit dans un petit paragraphe séparé entre les deux parties. Dans tous les cas, sautez une ligne après pour bien marquer le passage à la partie suivante sur votre copie.</p>
+
+            <h3>📈 Connecteurs logiques et progression</h3>
+            <h4>Utilisation des connecteurs</h4>
+            <p>Utilisez systématiquement des connecteurs logiques pour articuler vos idées :</p>
+            <ul>
+                <li><strong>Pour ajouter :</strong> "de plus", "en outre", "par ailleurs"</li>
+                <li><strong>Pour opposer :</strong> "toutefois", "néanmoins", "cependant"</li>
+                <li><strong>Pour conclure :</strong> "ainsi", "donc", "en définitive"</li>
+            </ul>
+            <h4>Progression logique</h4>
+            <p>Veillez à la progression de votre analyse en allant du plus évident au plus complexe. Chaque partie doit apporter un éclairage nouveau sur le texte tout en répondant à votre problématique.</p>
+
+            <h3>❌ Erreurs à éviter</h3>
+            <h4>Erreurs de fond</h4>
+            <ul>
+                <li>Ne paraphrasez jamais le texte, analysez-le et interprétez-le.</li>
+                <li>N'énumérez pas les procédés sans les analyser.</li>
+                <li>Ne répétez pas les mêmes idées dans plusieurs sous-parties.</li>
+                <li>Ne faites pas dire au texte ce qu'il ne dit pas.</li>
+            </ul>
+            <h4>Erreurs de forme (sur votre copie d'examen)</h4>
+            <ul>
+                <li>N'utilisez pas d'abréviations.</li>
+                <li>Ne laissez pas apparaître les titres de votre plan (I, II, 1, 2, etc.).</li>
+                <li>N'oubliez pas de souligner les titres d'œuvres et de mettre les citations entre guillemets.</li>
+                <li>Évitez les répétitions et soignez votre style.</li>
+            </ul>
+            <p><em>La maîtrise de ces techniques de rédaction vous permettra de produire un commentaire structuré, analysé et convaincant qui démontrera votre compréhension approfondie du texte étudié.</em></p>
+            
+            <h3>🔍 Exemples Concrets d'Analyse par Objet d'Étude</h3>
+
+            <div class="example-block">
+                <h4>Exemple 1 : Le roman et le récit</h4>
+                <p><strong>Extrait à analyser (hypothétique, inspiré de Manon Lescaut de l’Abbé Prévost) :</strong></p>
+                <blockquote>« Je trouvais de la joie dans cet exercice de ma liberté. » (ligne X)</blockquote>
+                <h5>Partie I : La quête de liberté du personnage principal</h5>
+                <h6>Sous-partie 1 : L’expression du désir d’émancipation</h6>
+                <p><strong>Idée directrice :</strong> Le personnage principal exprime un vif désir de s’affranchir des contraintes sociales.</p>
+                <p><strong>Analyse :</strong> L’emploi du pronom « je » met en avant la subjectivité du narrateur. L’expression « exercice de ma liberté » souligne l’importance de l’action et du choix personnel dans la quête d’indépendance.</p>
+                <p><strong>Citation :</strong> « Je trouvais de la joie dans cet exercice de ma liberté. » (ligne X)</p>
+                <p><strong>Effet :</strong> Le lecteur perçoit la force du sentiment de liberté ressenti par le personnage, ce qui le rend attachant et humain.</p>
+                <h6>Sous-partie 2 : Le paradoxe de la liberté</h6>
+                <p><strong>Idée directrice :</strong> Cette liberté est cependant fragile et menacée par les circonstances.</p>
+                <p><strong>Analyse :</strong> Le verbe « trouvais » à l'imparfait (valeur descriptive ou d'habitude révolue ici, plutôt que passé simple pour un moment éphémère comme suggéré dans le texte source ; j'ai gardé "trouvais" comme dans le texte source de l'exemple) suggère un état passé. Si c'était un passé simple, il marquerait un moment ponctuel. L'imparfait ici peut aussi souligner une joie qui s'inscrivait dans une certaine durée mais qui est maintenant révolue. Cela crée une tension narrative et annonce un retournement possible de situation.</p>
+                <p><strong>Effet :</strong> Le lecteur est incité à s’interroger sur la durabilité de la liberté du personnage.</p>
+            </div>
+
+            <div class="example-block">
+                <h4>Exemple 2 : Le théâtre</h4>
+                <p><strong>Extrait à analyser (inspiré de On ne badine pas avec l’amour de Musset) :</strong></p>
+                <blockquote>« Le cœur humain est un mystère. » (ligne Y)</blockquote>
+                <h5>Partie II : L’exploration des sentiments dans le théâtre</h5>
+                <h6>Sous-partie 1 : La mise en scène de l’ambiguïté des émotions</h6>
+                <p><strong>Idée directrice :</strong> Le texte théâtral met en scène la complexité des sentiments.</p>
+                <p><strong>Analyse :</strong> L’affirmation sentencieuse « le cœur humain est un mystère » fonctionne comme une maxime. L'auteur suggère ainsi que les émotions ne sont jamais totalement accessibles, même aux personnages eux-mêmes.</p>
+                <p><strong>Citation :</strong> « Le cœur humain est un mystère. » (ligne Y)</p>
+                <p><strong>Effet :</strong> Le spectateur est invité à s’interroger sur la sincérité et la nature profonde des sentiments des personnages, ce qui enrichit la dimension psychologique de la pièce.</p>
+                <h6>Sous-partie 2 : Les procédés stylistiques pour exprimer l’indéfinissable</h6>
+                <p><strong>Idée directrice :</strong> Musset utilise des images et des figures de style pour traduire l’ineffable.</p>
+                <p><strong>Analyse :</strong> L’expression « mystère » renvoie à l’idée d’inconnu. L’utilisation du présent de vérité générale (« est ») universalise le propos, lui conférant une portée philosophique. La concision de la phrase lui donne un caractère percutant.</p>
+                <p><strong>Effet :</strong> Le texte gagne en profondeur et en universalité, touchant le lecteur ou le spectateur par sa résonance intemporelle sur la condition humaine.</p>
+            </div>
+
+            <div class="example-block">
+                <h4>Exemple 3 : La poésie</h4>
+                <p><strong>Extrait à analyser (inspiré de Rimbaud, Cahier de Douai) :</strong></p>
+                <blockquote>« J’irai loin, bien loin, comme un bohémien. » (ligne Z)</blockquote>
+                <h5>Partie III : Le désir d’évasion dans la poésie</h5>
+                <h6>Sous-partie 1 : L’expression du désir de liberté</h6>
+                <p><strong>Idée directrice :</strong> Le poète exprime un besoin impérieux de fuir la réalité et les contraintes.</p>
+                <p><strong>Analyse :</strong> La répétition de l’adverbe « loin », intensifiée par « bien loin », insiste sur l’ampleur du désir d’évasion. La comparaison « comme un bohémien » introduit une image de liberté, d’errance et de marginalité choisie, typique de l'imaginaire romantique et rimbaldien.</p>
+                <p><strong>Citation :</strong> « J’irai loin, bien loin, comme un bohémien. » (ligne Z)</p>
+                <p><strong>Effet :</strong> Le lecteur est emporté par le mouvement d'éloignement exprimé dans le poème et peut partager l’aspiration du poète à une vie affranchie.</p>
+                <h6>Sous-partie 2 : Le rythme et la musicalité au service de l'évasion</h6>
+                <p><strong>Idée directrice :</strong> La forme poétique renforce le sentiment d’évasion.</p>
+                <p><strong>Analyse :</strong> Le futur simple (« J’irai ») projette résolument vers l'avenir, marquant la détermination du poète. Le rythme du vers, potentiellement un octosyllabe ou un alexandrin selon le poème d'origine, peut contribuer à cette impression de mouvement (par exemple, un rythme enlevé avec des accents dynamiques). L’allitération en « l » (« loin », « bohémien ») et potentiellement d'autres sonorités pourraient créer une impression de fluidité et de légèreté, évoquant le voyage.</p>
+                <p><strong>Effet :</strong> La musicalité du vers, combinée à la projection dans le futur et à l'image du bohémien, accentue la sensation de liberté et d'un départ imminent.</p>
+            </div>
+
+            <div class="example-block">
+                <h4>Exemple 4 : La littérature d’idées</h4>
+                <p><strong>Extrait à analyser (inspiré de Montaigne, Essais, « Des Cannibales » plutôt que « Sur l’inégalité entre les hommes » pour la citation donnée) :</strong></p>
+                <blockquote>« Chacun appelle barbarie ce qui n’est pas de son usage. » (ligne A)</blockquote>
+                <h5>Partie IV : La remise en cause des préjugés et la relativité culturelle</h5>
+                <h6>Sous-partie 1 : La critique de l’ethnocentrisme</h6>
+                <p><strong>Idée directrice :</strong> Montaigne dénonce la tendance humaine à juger les autres cultures à l'aune de ses propres coutumes, considérées comme la norme universelle.</p>
+                <p><strong>Analyse :</strong> L’emploi du pronom indéfini « Chacun » généralise le propos, soulignant un travers universel. Le terme « barbarie », utilisé de manière ironique par Montaigne, est retourné contre ceux qui l'emploient : il montre que ce jugement est subjectif et relatif ("ce qui n’est pas de son usage"). L’utilisation du présent de vérité générale confère à cette affirmation une portée intemporelle.</p>
+                <p><strong>Citation :</strong> « Chacun appelle barbarie ce qui n’est pas de son usage. » (ligne A)</p>
+                <p><strong>Effet :</strong> Le lecteur est invité à une réflexion critique sur ses propres préjugés et à prendre conscience de la relativité des valeurs et des jugements culturels.</p>
+                <h6>Sous-partie 2 : La portée humaniste et philosophique de la réflexion</h6>
+                <p><strong>Idée directrice :</strong> À travers cette critique, l’auteur prône l’ouverture d’esprit, la tolérance et une forme de scepticisme philosophique.</p>
+                <p><strong>Analyse :</strong> Montaigne utilise un style argumentatif clair et direct. La structure de la phrase, simple et concise, lui donne la force d'une maxime. En exposant ce mécanisme de jugement, il incite implicitement à suspendre son jugement hâtif et à considérer l'autre avec plus de curiosité et moins d'arrogance.</p>
+                <p><strong>Effet :</strong> Le texte dépasse la simple observation pour prendre une dimension pédagogique et humaniste, encourageant une posture intellectuelle plus humble et ouverte face à l'altérité.</p>
+            </div>
 
         </section>
 
@@ -847,9 +1086,8 @@
                 const targetElement = document.querySelector(targetId);
                 
                 if (targetElement) {
-                    // Calculate offset for sticky nav
                     const navHeight = document.querySelector('nav').offsetHeight;
-                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight - 20; // 20px for extra margin
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight - 20; 
 
                     window.scrollTo({
                         top: targetPosition,
@@ -878,7 +1116,6 @@
             });
         }
 
-        // Animation des cartes au hover (removed rotateX for simplicity and better compatibility)
         document.querySelectorAll('.step-card, .procede-card').forEach(card => {
             card.addEventListener('mouseenter', () => {
                 card.style.transform = 'scale(1.05)';
