@@ -17,7 +17,16 @@
             color: #333;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            padding-top: 0; /* Reset padding-top as nav will be sticky/fixed */
         }
+         
+        /* Adjust body padding for sticky header/nav on desktop */
+        @media (min-width: 769px) {
+            body {
+                padding-top: 100px; /* Adjust based on header/nav height */
+            }
+        }
+
 
         .container {
             max-width: 1200px;
@@ -28,12 +37,17 @@
         header {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 30px;
+            border-radius: 0 0 20px 20px; /* Round bottom corners only */
+            padding: 30px 20px 20px 20px; /* Adjusted padding */
+            margin-bottom: 0; /* No margin-bottom here */
             text-align: center;
             box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+            position: fixed; /* Make header fixed at the top */
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 200; /* Ensure it's above nav */
         }
 
         h1 {
@@ -46,33 +60,42 @@
         .subtitle {
             color: rgba(255, 255, 255, 0.9);
             font-size: 1.2em;
-            margin-bottom: 20px;
+            margin-bottom: 15px; /* Adjusted margin */
         }
 
         .exam-date {
             background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
+            padding: 10px 15px; /* Adjusted padding */
             border-radius: 15px;
             color: white;
             font-weight: bold;
             display: inline-block;
             animation: pulse 2s infinite;
+            font-size: 0.9em; /* Adjusted font size */
         }
 
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
         }
+        
+        /* --- Navigation Styling --- */
+
+        /* Desktop Nav (Sticky) */
+        .nav-container-desktop {
+             position: sticky;
+             top: 100px; /* Position below the fixed header (adjust if header height changes) */
+             z-index: 100;
+             margin-bottom: 30px; /* Add margin below nav on desktop */
+        }
+
 
         nav {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 30px;
+            padding: 15px; /* Adjusted padding */
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 20px;
-            z-index: 100;
+           
         }
 
         .nav-grid {
@@ -86,7 +109,7 @@
             color: white;
             padding: 10px 12px; /* Adjusted padding */
             border: none;
-            border-radius: 10px;
+            border-radius: 8px; /* Slightly smaller radius */
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: bold;
@@ -101,6 +124,120 @@
             box-shadow: 0 6px 20px rgba(0,0,0,0.2);
         }
 
+        /* Mobile Nav Toggle Button */
+        .nav-toggle {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 20px; /* Position in header area */
+            right: 20px;
+            z-index: 300; /* Ensure it's on top */
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            font-size: 1.5em;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        /* Mobile Nav Overlay */
+        .nav-menu-overlay {
+            display: block; /* Block by default, but content handled by media query */
+        }
+
+        /* --- Mobile Specific Styles --- */
+        @media (max-width: 768px) {
+            header {
+                padding: 20px 15px 15px 15px; /* Smaller padding for mobile header */
+                border-radius: 0 0 15px 15px;
+            }
+             h1 { font-size: 2em; }
+             .subtitle { font-size: 1em; }
+             .exam-date { font-size: 0.8em; padding: 8px 12px; }
+
+            body {
+                padding-top: 90px; /* Adjust body padding for smaller mobile header */
+            }
+             
+            .nav-toggle {
+                display: block; /* Show toggle button on mobile */
+            }
+
+            .nav-container-desktop {
+                position: static; /* Disable sticky on mobile */
+                 margin-bottom: 0; /* Remove margin */
+            }
+
+            .nav-menu-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.9); /* Semi-transparent dark background */
+                z-index: 250; /* Below toggle, above content */
+                overflow-y: auto; /* Enable scrolling if menu is long */
+                transition: transform 0.3s ease-in-out;
+                transform: translateX(100%); /* Hidden by default */
+                -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+            }
+
+            .nav-menu-overlay.is-open {
+                transform: translateX(0); /* Slide in */
+            }
+
+            nav {
+                background: none; /* Remove white background from nav inside overlay */
+                border-radius: 0;
+                box-shadow: none;
+                padding: 100px 20px 20px 20px; /* Add padding to not be under header/toggle */
+            }
+
+            .nav-grid {
+                grid-template-columns: 1fr; /* Stack buttons vertically */
+                gap: 15px; /* Increase gap for vertical stacking */
+            }
+
+            .nav-btn {
+                padding: 15px 20px; /* Larger buttons in mobile menu */
+                font-size: 1em;
+                 border-radius: 8px;
+            }
+             
+            .container {
+                padding: 10px; /* Smaller container padding */
+            }
+             
+            .section {
+                padding: 20px; /* Smaller section padding */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-toggle {
+                top: 15px; /* Adjust toggle position for smaller screens */
+                right: 15px;
+                padding: 8px 12px;
+                font-size: 1.2em;
+            }
+            header {
+                 padding: 15px 10px 10px 10px;
+            }
+            body {
+                 padding-top: 80px;
+            }
+            .nav-menu-overlay nav {
+                 padding-top: 80px;
+            }
+             h1 { font-size: 1.8em; }
+             .subtitle { font-size: 0.9em; }
+             .exam-date { font-size: 0.7em; padding: 6px 10px; }
+        }
+        
+
+        /* --- General Section Styling --- */
         .section {
             background: white;
             border-radius: 20px;
@@ -208,923 +345,920 @@
             background: white;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        th {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 15px;
-            text-align: left;
-            font-weight: bold;
-        }
-
-        td {
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        td ul {
-            padding-left: 20px;
-            margin: 0;
-        }
-        td li {
-            margin-bottom: 5px;
-        }
-
-
-        tr:hover {
-            background: #f8f9ff;
-        }
-
-        .procedes-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .procede-card {
-            background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 15px;
-            transition: all 0.3s ease;
-        }
-        .procede-card ul {
-            list-style-position: inside;
-            padding-left: 0;
-        }
-
-        .procede-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(79, 172, 254, 0.3);
-        }
-
-        .tips-list {
-            list-style: none;
-            padding: 0;
-        }
-        .tips-list ul { /* For nested lists within tips-list */
-             list-style: disc;
-             padding-left: 20px;
-             margin-top: 5px;
-        }
-         .section ul { /* General ul styling within section if not tips-list */
-            list-style: disc;
-            padding-left: 25px;
-            margin: 10px 0;
-        }
-        .section ol { /* General ol styling */
-            padding-left: 25px;
-            margin: 10px 0;
-        }
-        .section ul li, .section ol li {
-            margin-bottom: 8px;
-        }
-
-
-        .tips-list li {
-            background: #f8f9ff;
-            margin: 10px 0;
-            padding: 15px;
-            border-left: 5px solid #667eea;
-            border-radius: 5px;
-            transition: transform 0.2s ease;
-            list-style-type: none; /* Ensure no bullet for tips-list items */
-        }
-         .tips-list li ul li{ /* nested li inside tips-list li */
-            background: transparent;
-            border-left: none;
-            padding: 0;
-            margin: 5px 0;
-            list-style-type: disc;
-        }
-
-
-        .tips-list li:hover {
-            transform: translateX(10px);
-            background: #e8f2ff;
-        }
-
-        .warning {
-            background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 100%);
-            color: #333;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-            border-left: 5px solid #ff6b6b;
-        }
-        .warning ul {
-            list-style-position: inside;
-            padding-left: 0;
-        }
-
-
-        .success {
-            background: linear-gradient(45deg, #56ffa4 0%, #59bc86 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-        }
-
-        .example-block {
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            background-color: #fdfdff;
-        }
-         .example-block p, .example-block blockquote {
-             margin-bottom: 10px;
-         }
-         .example-block p:last-child {
-             margin-bottom: 0;
-         }
-
-
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            cursor: pointer;
-            font-size: 1.5em;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .back-to-top.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .back-to-top:hover {
-            transform: scale(1.1);
-        }
-
-        @media (max-width: 992px) { /* Adjust breakpoint for nav buttons */
-             .nav-grid {
-                grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            }
-             .nav-btn {
-                 font-size: 0.8em;
-             }
-        }
-
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
+            box-shadow: 0 4来的;
+            td {
+                padding: 15px;
+                border-bottom: 1px solid #eee;
             }
             
-            h1 {
-                font-size: 2em;
+            td ul {
+                padding-left: 20px;
+                margin: 0;
             }
-            
-            .nav-grid {
-                grid-template-columns: repeat(2, 1fr); /* Two columns for smaller screens */
+            td li {
+                margin-bottom: 5px;
             }
-            .nav-btn {
-                font-size: 0.85em; /* Can slightly increase now */
-                padding: 10px 12px;
+
+
+            tr:hover {
+                background: #f8f9ff;
             }
-            
-            .section {
+
+            .procedes-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+                margin: 20px 0;
+            }
+
+            .procede-card {
+                background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+                color: white;
                 padding: 20px;
+                border-radius: 15px;
+                transition: all 0.3s ease;
             }
-        }
-        @media (max-width: 480px) {
-            .nav-grid {
-                grid-template-columns: 1fr; /* Stack buttons on very small screens */
+            .procede-card ul {
+                list-style-position: inside;
+                padding-left: 0;
             }
-        }
+
+            .procede-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px rgba(79, 172, 254, 0.3);
+            }
+
+            .tips-list {
+                list-style: none;
+                padding: 0;
+            }
+            .tips-list ul { /* For nested lists within tips-list */
+                 list-style: disc;
+                 padding-left: 20px;
+                 margin-top: 5px;
+            }
+             .section ul { /* General ul styling within section if not tips-list */
+                list-style: disc;
+                padding-left: 25px;
+                margin: 10px 0;
+            }
+            .section ol { /* General ol styling */
+                padding-left: 25px;
+                margin: 10px 0;
+            }
+            .section ul li, .section ol li {
+                margin-bottom: 8px;
+            }
 
 
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
+            .tips-list li {
+                background: #f8f9ff;
+                margin: 10px 0;
+                padding: 15px;
+                border-left: 5px solid #667eea;
+                border-radius: 5px;
+                transition: transform 0.2s ease;
+                list-style-type: none; /* Ensure no bullet for tips-list items */
+            }
+             .tips-list li ul li{ /* nested li inside tips-list li */
+                background: transparent;
+                border-left: none;
+                padding: 0;
+                margin: 5px 0;
+                list-style-type: disc;
+            }
 
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
+
+            .tips-list li:hover {
+                transform: translateX(10px);
+                background: #e8f2ff;
+            }
+
+            .warning {
+                background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 100%);
+                color: #333;
+                padding: 20px;
+                border-radius: 15px;
+                margin: 20px 0;
+                border-left: 5px solid #ff6b6b;
+            }
+            .warning ul {
+                list-style-position: inside;
+                padding-left: 0;
+            }
+
+
+            .success {
+                background: linear-gradient(45deg, #56ffa4 0%, #59bc86 100%);
+                color: white;
+                padding: 20px;
+                border-radius: 15px;
+                margin: 20px 0;
+            }
+
+            .example-block {
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                padding: 20px;
+                margin: 20px 0;
+                background-color: #fdfdff;
+            }
+             .example-block p, .example-block blockquote {
+                 margin-bottom: 10px;
+             }
+             .example-block p:last-child {
+                 margin-bottom: 0;
+             }
+
+
+            .back-to-top {
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                background: linear-gradient(45deg, #667eea, #764ba2);
+                color: white;
+                border: none;
+                border-radius: 50%;
+                width: 60px;
+                height: 60px;
+                cursor: pointer;
+                font-size: 1.5em;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                transition: all 0.3s ease;
+                opacity: 0;
+                visibility: hidden;
+                z-index: 150; /* Below nav overlay and toggle */
+            }
+
+            .back-to-top.show {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .back-to-top:hover {
+                transform: scale(1.1);
+            }
+
+            .fade-in {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: all 0.6s ease;
+            }
+
+            .fade-in.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        </style>
+    </head>
+    <body>
         <header>
             <h1>📚 Commentaire de Texte</h1>
             <p class="subtitle">Guide complet pour le Bac Français 2025</p>
             <div class="exam-date">
                 🗓️ Épreuve : Vendredi 13 juin 2025 (8h-12h)
             </div>
+            <!-- Mobile Navigation Toggle Button -->
+            <button class="nav-toggle" aria-label="Ouvrir le menu de navigation">☰</button>
         </header>
 
-        <nav>
-            <div class="nav-grid">
-                <a href="#objectifs" class="nav-btn">🎯 Objectifs</a>
-                <a href="#methode" class="nav-btn">📋 Méthode</a>
-                <a href="#structure" class="nav-btn">🏗️ Structure</a>
-                <a href="#procedes" class="nav-btn">✨ Procédés</a>
-                <a href="#parcours-analyse" class="nav-btn">🔎 Analyse / Parcours</a>
-                <a href="#redaction-parties" class="nav-btn">✍️ Rédaction Parties</a>
-                <a href="#conseils" class="nav-btn">💡 Conseils</a>
-                <a href="#preparation" class="nav-btn">📖 Préparation</a>
+         <!-- Desktop Nav Container (Sticky on desktop) -->
+        <div class="nav-container-desktop">
+             <!-- Mobile Navigation Overlay Container -->
+            <div class="nav-menu-overlay">
+                <!-- Navigation Content -->
+                <nav>
+                    <div class="nav-grid">
+                        <a href="#objectifs" class="nav-btn">🎯 Objectifs</a>
+                        <a href="#methode" class="nav-btn">📋 Méthode</a>
+                        <a href="#structure" class="nav-btn">🏗️ Structure</a>
+                        <a href="#procedes" class="nav-btn">✨ Procédés</a>
+                        <a href="#parcours-analyse" class="nav-btn">🔎 Analyse / Parcours</a>
+                        <a href="#redaction-parties" class="nav-btn">✍️ Rédaction Parties</a>
+                        <a href="#conseils" class="nav-btn">💡 Conseils</a>
+                        <a href="#preparation" class="nav-btn">📖 Préparation</a>
+                    </div>
+                </nav>
             </div>
-        </nav>
+        </div>
 
-        <section id="objectifs" class="section fade-in">
-            <h2>🎯 Objectifs du commentaire de texte</h2>
-            
-            <div class="highlight-box">
-                <strong>Objectif principal :</strong> Montrer que le texte produit des effets sur le lecteur et que l'auteur a mis en œuvre un ensemble de procédés littéraires pour parvenir à cette fin.
-            </div>
 
-            <p>Le commentaire de texte constitue l'un des exercices majeurs de l'épreuve écrite du baccalauréat de français 2025. Cette épreuve demande aux candidats de choisir entre le commentaire de texte et la dissertation.</p>
+        <div class="container">
+            <section id="objectifs" class="section fade-in">
+                <h2>🎯 Objectifs du commentaire de texte</h2>
 
-            <h3>Ce qu'il faut retenir :</h3>
-            <ul class="tips-list">
-                <li><strong>Analyse littéraire :</strong> Il s'agit d'une analyse des grands enjeux esthétiques et idéologiques du texte</li>
-                <li><strong>Interprétation justifiée :</strong> Proposer une interprétation en l'appuyant sur des analyses précises du texte</li>
-                <li><strong>Pas de sens caché :</strong> On ne vous demande pas de décrypter un sens caché, mais d'analyser comment l'auteur procède</li>
-                <li><strong>Vocabulaire spécialisé :</strong> Les correcteurs attendent un vocabulaire littéraire technique</li>
-            </ul>
-
-            <div class="warning">
-                <strong>⚠️ Erreur à éviter :</strong> Ne séparez jamais le fond et la forme ! Vous devez absolument mêler l'analyse du sens du texte et l'étude des procédés d'écriture utilisés.
-            </div>
-        </section>
-
-        <section id="methode" class="section fade-in">
-            <h2>📋 Méthode détaillée en 8 étapes</h2>
-
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h3>Observer le texte</h3>
-                    <p>Avant même de lire, observez la forme, la ponctuation, le contexte. Exploitez le paratexte intelligemment.</p>
+                <div class="highlight-box">
+                    <strong>Objectif principal :</strong> Montrer que le texte produit des effets sur le lecteur et que l'auteur a mis en œuvre un ensemble de procédés littéraires pour parvenir à cette fin.
                 </div>
 
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h3>Lister les informations</h3>
-                    <p>Notez : nom de l'auteur, titre, date, contexte (siècle, mouvement), genre et forme du texte.</p>
+                <p>Le commentaire de texte constitue l'un des exercices majeurs de l'épreuve écrite du baccalauréat de français 2025. Cette épreuve demande aux candidats de choisir entre le commentaire de texte et la dissertation.</p>
+
+                <h3>Ce qu'il faut retenir :</h3>
+                <ul class="tips-list">
+                    <li><strong>Analyse littéraire :</strong> Il s'agit d'une analyse des grands enjeux esthétiques et idéologiques du texte</li>
+                    <li><strong>Interprétation justifiée :</strong> Proposer une interprétation en l'appuyant sur des analyses précises du texte</li>
+                    <li><strong>Pas de sens caché :</strong> On ne vous demande pas de décrypter un sens caché, mais d'analyser comment l'auteur procède</li>
+                    <li><strong>Vocabulaire spécialisé :</strong> Les correcteurs attendent un vocabulaire littéraire technique</li>
+                </ul>
+
+                <div class="warning">
+                    <strong>⚠️ Erreur à éviter :</strong> Ne séparez jamais le fond et la forme ! Vous devez absolument mêler l'analyse du sens du texte et l'étude des procédés d'écriture utilisés.
+                </div>
+            </section>
+
+            <section id="methode" class="section fade-in">
+                <h2>📋 Méthode détaillée en 8 étapes</h2>
+
+                <div class="steps-grid">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <h3>Observer le texte</h3>
+                        <p>Avant même de lire, observez la forme, la ponctuation, le contexte. Exploitez le paratexte intelligemment.</p>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <h3>Lister les informations</h3>
+                        <p>Notez : nom de l'auteur, titre, date, contexte (siècle, mouvement), genre et forme du texte.</p>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <h3>Analyse linéaire</h3>
+                        <p>Plusieurs lectures avec la méthode des 4 grilles : thèmes (rouge), conjugaison (verte), grammaire (bleue), figures de style (jaune).</p>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-number">4</div>
+                        <h3>Élaborer un plan</h3>
+                        <p>2-3 grandes parties avec sous-parties. Plan progressif du plus évident au plus complexe. Évitez le plan linéaire !</p>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-number">5</div>
+                        <h3>Rédiger l'introduction</h3>
+                        <p>4 éléments : amorce, présentation du texte, problématique, annonce du plan.</p>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-number">6</div>
+                        <h3>Développement</h3>
+                        <p>Chaque partie : phrase introductive, 2-3 sous-parties avec arguments et citations, phrase de conclusion.</p>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-number">7</div>
+                        <h3>Conclusion</h3>
+                        <p>3 éléments : bilan du développement, réponse à la problématique, ouverture culturelle.</p>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-number">8</div>
+                        <h3>Relecture</h3>
+                        <p>Corriger les fautes d'orthographe, grammaire et conjugaison. Étape cruciale !</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="structure" class="section fade-in">
+                <h2>🏗️ Structure détaillée</h2>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Partie</th>
+                                <th>Contenu</th>
+                                <th>Conseils</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Introduction</strong></td>
+                                <td>Présentation (auteur, titre, contexte), situation de l'extrait, problématique, plan</td>
+                                <td>Formuler une problématique interrogative (ex. "En quoi... ?"), éviter la lourdeur dans l'annonce du plan</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Développement</strong></td>
+                                <td>2-3 axes, chacun avec sous-parties, analyse des procédés et effets, progression</td>
+                                <td>Utiliser des connecteurs, terminer chaque axe par une conclusion partielle, éviter la paraphrase</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Conclusion</strong></td>
+                                <td>Résumé, réponse à la problématique, ouverture culturelle (autre œuvre, art, etc.)</td>
+                                <td>Éviter de répéter, ouvrir sur une comparaison pertinente</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
 
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h3>Analyse linéaire</h3>
-                    <p>Plusieurs lectures avec la méthode des 4 grilles : thèmes (rouge), conjugaison (verte), grammaire (bleue), figures de style (jaune).</p>
+                <h3>Détails de l'introduction :</h3>
+                <div class="highlight-box">
+                    <ol>
+                        <li><strong>Amorce :</strong> Situez le texte dans un contexte plus large (mouvement littéraire, événement historique)</li>
+                        <li><strong>Présentation :</strong> Nom de l'auteur, titre de l'œuvre, date, situation de l'extrait</li>
+                        <li><strong>Problématique :</strong> Question qui guide l'analyse (Comment... ? En quoi... ?)</li>
+                        <li><strong>Plan :</strong> Annonce fluide sans lourdeurs ("Nous verrons d'abord..., puis..., enfin...")</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section id="procedes" class="section fade-in">
+                <h2>✨ Procédés littéraires essentiels</h2>
+
+                <div class="procedes-grid">
+                    <div class="procede-card">
+                        <h3>🎨 Procédés lexicaux</h3>
+                        <ul>
+                            <li>Champs lexicaux</li>
+                            <li>Connotation</li>
+                            <li>Niveaux de langue</li>
+                            <li>Nuances mélioratives/péjoratives</li>
+                        </ul>
+                    </div>
+
+                    <div class="procede-card">
+                        <h3>📝 Procédés grammaticaux</h3>
+                        <ul>
+                            <li>Types de phrases</li>
+                            <li>Temps verbaux et valeurs</li>
+                            <li>Syntaxe (circonstances)</li>
+                            <li>Structures simples/complexes</li>
+                        </ul>
+                    </div>
+
+                    <div class="procede-card">
+                        <h3>🎭 Figures de style</h3>
+                        <ul>
+                            <li>Métaphore/Comparaison</li>
+                            <li>Hyperbole</li>
+                            <li>Répétition</li>
+                            <li>Allitération/Assonance</li>
+                            <li>Antithèse</li>
+                        </ul>
+                    </div>
                 </div>
 
-                <div class="step-card">
-                    <div class="step-number">4</div>
-                    <h3>Élaborer un plan</h3>
-                    <p>2-3 grandes parties avec sous-parties. Plan progressif du plus évident au plus complexe. Évitez le plan linéaire !</p>
+                <div class="success">
+                    <strong>💡 Conseil clé :</strong> Ne vous contentez pas d'identifier les procédés ! Expliquez toujours leur effet sur le lecteur. Par exemple : "L'allitération en 'r' imite le bruit du vent, renforçant l'impression de chaos."
+                </div>
+            </section>
+
+            <section id="parcours-analyse" class="section fade-in">
+                <h2>🔎 Analyse Spécifique par Objet d'Étude (Parcours 2025)</h2>
+                <p>Pour réussir votre commentaire de texte au bac de français 2025, il est essentiel de maîtriser les spécificités techniques et stylistiques de chaque objet d'étude. Chaque parcours correspond à un type spécifique de texte (poésie, théâtre, roman et récit, littérature d’idées) et est associé à une œuvre avec un thème ou une problématique particulière. Ces parcours guident l’analyse et nécessitent une attention particulière aux procédés littéraires en lien avec les thèmes proposés.</p>
+                <p>Le programme du baccalauréat 2025 en français inclut quatre objets d’étude principaux : la poésie du XIXe siècle au XXIe siècle, la littérature d’idées du XVIe siècle au XVIIIe siècle, le roman et le récit du Moyen-Âge au XXIe siècle, et le théâtre du XVIIe siècle au XXIe siècle. Pour le commentaire, l'objectif est d’analyser un extrait en montrant comment la forme (procédés littéraires) produit des effets sur le lecteur, tout en reliant cette analyse aux thèmes du parcours.</p>
+
+                <h3>🎭 Le théâtre du XVIIe siècle au XXIe siècle</h3>
+                <h4>Aspects techniques fondamentaux :</h4>
+                <ul class="tips-list">
+                    <li><strong>Versification :</strong> Essentielle pour les pièces classiques. L'alexandrin (12 syllabes) est central.
+                        <ul>
+                            <li><strong>Hémistiches :</strong> Les deux moitiés de l'alexandrin (6 syllabes chacune), séparées par une césure. Analyser comment la césure marque une unité de sens ou un rythme, renforçant l'effet dramatique.</li>
+                            <li><strong>Rimes :</strong> Plates, croisées, embrassées. Leur analyse aide à comprendre comment le texte soutient les thèmes du parcours.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Structure dramatique :</strong> Situer l'extrait (exposition, nœud, dénouement) et son rôle dans la tension.</li>
+                    <li><strong>Dialogue et caractérisation :</strong> Comment les répliques révèlent personnages, intentions, relations.</li>
+                    <li><strong>Effets dramatiques :</strong> Didascalies, impact du langage (vers/prose) sur le spectateur.</li>
+                </ul>
+                <h4>Procédés et registres spécifiques :</h4>
+                <ul class="tips-list">
+                    <li><strong>Registres dominants :</strong> Comique (répétition, quiproquo, exagération), tragique (lexique de la fatalité, désespoir, exclamations, interrogations, apostrophes), dramatique.</li>
+                </ul>
+                <h4>Œuvres au programme 2025 et parcours associés :</h4>
+                <div class="highlight-box">
+                    <ul>
+                        <li><strong>Pierre Corneille, <em>Le Menteur</em></strong> (Parcours : "mensonge et comédie")</li>
+                        <li><strong>Alfred de Musset, <em>On ne badine pas avec l’amour</em></strong> (Parcours : "les jeux du cœur et de la parole")</li>
+                        <li><strong>Nathalie Sarraute, <em>Pour un oui ou pour un non</em></strong> (Parcours : "théâtre et dispute")</li>
+                    </ul>
                 </div>
 
-                <div class="step-card">
-                    <div class="step-number">5</div>
-                    <h3>Rédiger l'introduction</h3>
-                    <p>4 éléments : amorce, présentation du texte, problématique, annonce du plan.</p>
+                <h3>📜 La poésie du XIXe siècle au XXIe siècle</h3>
+                <h4>Analyse de la versification et forme :</h4>
+                <ul class="tips-list">
+                    <li><strong>Forme du poème :</strong> Sonnet, forme libre, calligramme, etc.</li>
+                    <li><strong>Mètre :</strong> Octosyllabe, décasyllabe, alexandrin, vers libres. Les vers libres peuvent refléter une rupture avec les conventions (ex: Rimbaud).</li>
+                    <li><strong>Rimes :</strong>
+                        <ul>
+                            <li><strong>Richesse :</strong> Pauvres (1 son), suffisantes (2 sons), riches (3 sons), léonines (4+ sons).</li>
+                            <li><strong>Genre :</strong> Masculines ou féminines (selon présence d'un 'e' muet final).</li>
+                            <li><strong>Disposition :</strong> Plates (aabb), croisées (abab), embrassées (abba).</li>
+                        </ul>
+                    </li>
+                    <li><strong>Structure des strophes.</strong></li>
+                </ul>
+                <h4>Figures de style et imagerie :</h4>
+                <ul class="tips-list">
+                    <li><strong>Figures d'analogie :</strong> Métaphores, comparaisons.</li>
+                    <li><strong>Effets sonores :</strong> Allitérations, assonances.</li>
+                    <li><strong>Procédés d'amplification ou d'atténuation.</strong></li>
+                    <li><strong>Champs lexicaux :</strong> Et leurs effets sur le lecteur.</li>
+                </ul>
+                <h4>Ton et voix :</h4>
+                <ul class="tips-list">
+                    <li><strong>Registre lyrique :</strong> Expression des sentiments personnels (usage de la 1ère personne, lexique des émotions). Peut aussi être narratif, ironique, etc.</li>
+                </ul>
+                <h4>Œuvres au programme 2025 et parcours associés :</h4>
+                <div class="highlight-box">
+                    <ul>
+                        <li><strong>Arthur Rimbaud, <em>Cahier de Douai</em></strong> (Parcours : "émancipations créatrices")</li>
+                        <li><strong>Francis Ponge, <em>La rage de l’expression</em></strong> (Parcours : "dans l’atelier du poète")</li>
+                        <li><strong>Hélène Dorion, <em>Mes forêts</em></strong> (Parcours : "la poésie, la nature, l’intime")</li>
+                    </ul>
                 </div>
 
-                <div class="step-card">
-                    <div class="step-number">6</div>
-                    <h3>Développement</h3>
-                    <p>Chaque partie : phrase introductive, 2-3 sous-parties avec arguments et citations, phrase de conclusion.</p>
+                <h3>📖 Le roman et le récit du Moyen Âge au XXIe siècle</h3>
+                <h4>Techniques narratives :</h4>
+                <ul class="tips-list">
+                    <li><strong>Type de narrateur :</strong>
+                        <ul>
+                            <li><strong>Interne :</strong> Personnage de l'histoire (principal ou témoin). Point de vue limité.</li>
+                            <li><strong>Externe / Omniscient :</strong> Extérieur à l'histoire, sait tout.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Voix narrative et point de vue (focalisation).</strong></li>
+                    <li><strong>Structure de l'extrait et construction temporelle (chronologie, analepses, prolepses).</strong></li>
+                </ul>
+                <h4>Personnages et intrigue :</h4>
+                <ul class="tips-list">
+                    <li><strong>Caractérisation :</strong> Directe (description explicite) ou indirecte (par actions, paroles, pensées). Leur évolution et fonction.</li>
+                    <li><strong>Intrigue :</strong> Comment elle se développe et maintient l'intérêt.</li>
+                    <li><strong>Thèmes et motifs :</strong> Idées centrales et leur traitement.</li>
+                </ul>
+                <h4>Style et registres romanesques :</h4>
+                <ul class="tips-list">
+                    <li><strong>Registres :</strong> Réaliste, pathétique (émouvoir par la souffrance, lexique des émotions, ponctuation expressive), épique (grandeur des personnages/situations), satirique, etc.</li>
+                    <li><strong>Choix stylistiques :</strong> Champs lexicaux, figures de style.</li>
+                </ul>
+                <h4>Œuvres au programme 2025 et parcours associés :</h4>
+                <div class="highlight-box">
+                    <ul>
+                        <li><strong>Abbé Prévost, <em>Manon Lescaut</em></strong> (Parcours : "personnages en marge, plaisirs du romanesque")</li>
+                        <li><strong>Honoré de Balzac, <em>La Peau de chagrin</em></strong> (Parcours : "les romans de l'énergie : création et destruction")</li>
+                        <li><strong>Colette, <em>Sido</em> suivi de <em>Les Vrilles de la vigne</em></strong> (Parcours : "la célébration du monde")</li>
+                    </ul>
                 </div>
 
-                <div class="step-card">
-                    <div class="step-number">7</div>
-                    <h3>Conclusion</h3>
-                    <p>3 éléments : bilan du développement, réponse à la problématique, ouverture culturelle.</p>
+                <h3>💡 La littérature d'idées du XVIe au XVIIIe siècle</h3>
+                <h4>Structure et procédés argumentatifs :</h4>
+                <ul class="tips-list">
+                    <li><strong>Objectif :</strong> Convaincre (par la raison) ou persuader (par les sentiments).</li>
+                    <li><strong>Thèse :</strong> Idée principale défendue par l'auteur.</li>
+                    <li><strong>Arguments et exemples :</strong> Preuves et illustrations soutenant la thèse.</li>
+                    <li><strong>Organisation logique :</strong> Connecteurs, progression du raisonnement.</li>
+                </ul>
+                <h4>Dispositifs rhétoriques et figures de style :</h4>
+                <ul class="tips-list">
+                    <li><strong>Figures d'analogie :</strong> Métaphore argumentative, comparaison.</li>
+                    <li><strong>Figures d'insistance :</strong> Répétition, anaphore, parallélisme, dérivation.</li>
+                    <li><strong>Figures d'amplification :</strong> Hyperbole, gradation.</li>
+                    <li><strong>Figures d'atténuation :</strong> Euphémisme, litote.</li>
+                    <li><strong>Figures d'opposition :</strong> Antithèse, oxymore, chiasme.</li>
+                    <li><strong>Ironie :</strong> Dire le contraire de ce que l'on pense pour dénoncer.</li>
+                </ul>
+                <h4>Contexte et registres :</h4>
+                <ul class="tips-list">
+                    <li><strong>Contexte historique et philosophique :</strong> Relier le texte aux idées de son époque (ex: Lumières, Renaissance).</li>
+                    <li><strong>Registres :</strong> Polémique (critiquer vivement), satirique (tourner en ridicule pour dénoncer), ironique, didactique.</li>
+                </ul>
+                <h4>Œuvres au programme 2025 et parcours associés :</h4>
+                <div class="highlight-box">
+                    <ul>
+                        <li><strong>François Rabelais, <em>Gargantua</em></strong> (Livres I à XI) (Parcours : "rire et savoir")</li>
+                        <li><strong>Jean de La Bruyère, <em>Les Caractères</em></strong> (Livres V à X) (Parcours : "la comédie sociale")</li>
+                        <li><strong>Olympe de Gouges, <em>Déclaration des droits de la femme et de la citoyenne</em></strong> (du préambule au postambule) (Parcours : "écrire et combattre pour l’égalité")</li>
+                    </ul>
                 </div>
 
-                <div class="step-card">
-                    <div class="step-number">8</div>
-                    <h3>Relecture</h3>
-                    <p>Corriger les fautes d'orthographe, grammaire et conjugaison. Étape cruciale !</p>
+                <h3>📊 Tableau récapitulatif des éléments clés par parcours</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Parcours / Objet d'étude</th>
+                                <th>Type de texte</th>
+                                <th>Éléments importants à analyser</th>
+                                <th>Exemple de focus</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Théâtre</strong><br>(mensonge, jeux du cœur, dispute)</td>
+                                <td>Pièce (vers ou prose)</td>
+                                <td>
+                                    <ul>
+                                        <li>Versification (alexandrins, hémistiches, césure, rimes)</li>
+                                        <li>Structure dramatique (actes, scènes, exposition, nœud, dénouement)</li>
+                                        <li>Dialogue (répliques, stichomythies, tirades, monologues)</li>
+                                        <li>Didascalies</li>
+                                        <li>Registres (comique, tragique, dramatique)</li>
+                                        <li>Effets sur le spectateur</li>
+                                    </ul>
+                                </td>
+                                <td>Analyse des alexandrins et de la progression dramatique dans <em>Le Menteur</em> (Corneille) en lien avec "mensonge et comédie".</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Poésie</strong><br>(émancipation, atelier du poète, nature et intime)</td>
+                                <td>Poème</td>
+                                <td>
+                                    <ul>
+                                        <li>Forme (sonnet, vers libres, etc.)</li>
+                                        <li>Versification (mètre, rimes, strophes, rythme)</li>
+                                        <li>Figures de style (métaphores, comparaisons, allitérations, assonances)</li>
+                                        <li>Imagerie et symboles</li>
+                                        <li>Ton et voix poétique (lyrisme, engagement, etc.)</li>
+                                        <li>Relation forme/sens</li>
+                                    </ul>
+                                </td>
+                                <td>Étude des vers libres et des images chez Rimbaud (<em>Cahier de Douai</em>) pour illustrer "émancipations créatrices".</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Roman et Récit</strong><br>(marginaux, énergie créatrice/destructrice, célébration du monde)</td>
+                                <td>Extrait narratif</td>
+                                <td>
+                                    <ul>
+                                        <li>Statut du narrateur et focalisation</li>
+                                        <li>Structure narrative (ordre du récit, rythme)</li>
+                                        <li>Caractérisation des personnages (physique, morale, sociale)</li>
+                                        <li>Cadre spatio-temporel</li>
+                                        <li>Thèmes et motifs</li>
+                                        <li>Style et registres (réaliste, pathétique, épique, etc.)</li>
+                                    </ul>
+                                </td>
+                                <td>Analyse du point de vue narratif et de la construction du personnage marginal dans <em>Manon Lescaut</em> (Abbé Prévost).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Littérature d'idées</strong><br>(rire et savoir, comédie sociale, écrire et combattre)</td>
+                                <td>Texte argumentatif</td>
+                                <td>
+                                    <ul>
+                                        <li>Thèse, arguments, exemples</li>
+                                        <li>Structure argumentative (types de raisonnement)</li>
+                                        <li>Procédés rhétoriques (persuasion, conviction)</li>
+                                        <li>Figures de style argumentatives (ironie, hyperbole, antithèse)</li>
+                                        <li>Implication de l'auteur et du destinataire</li>
+                                        <li>Contexte historique, social, philosophique</li>
+                                        <li>Ton et registres (polémique, satirique, didactique)</li>
+                                    </ul>
+                                </td>
+                                <td>Examen de la structure argumentative et des procédés de persuasion dans la <em>Déclaration des droits de la femme et de la citoyenne</em> (Olympe de Gouges) en lien avec "écrire et combattre pour l’égalité".</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
-        </section>
 
-        <section id="structure" class="section fade-in">
-            <h2>🏗️ Structure détaillée</h2>
 
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Partie</th>
-                            <th>Contenu</th>
-                            <th>Conseils</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Introduction</strong></td>
-                            <td>Présentation (auteur, titre, contexte), situation de l'extrait, problématique, plan</td>
-                            <td>Formuler une problématique interrogative (ex. "En quoi... ?"), éviter la lourdeur dans l'annonce du plan</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Développement</strong></td>
-                            <td>2-3 axes, chacun avec sous-parties, analyse des procédés et effets, progression</td>
-                            <td>Utiliser des connecteurs, terminer chaque axe par une conclusion partielle, éviter la paraphrase</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Conclusion</strong></td>
-                            <td>Résumé, réponse à la problématique, ouverture culturelle (autre œuvre, art, etc.)</td>
-                            <td>Éviter de répéter, ouvrir sur une comparaison pertinente</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                <h3>📌 Conseils transversaux pour l'analyse</h3>
+                <ul class="tips-list">
+                    <li><strong>Identifier le parcours :</strong> Commencez par identifier le type de texte et son parcours pour orienter votre plan. Si c'est du théâtre en vers, une partie sur la versification est pertinente.</li>
+                    <li><strong>Citations :</strong> Utilisez des citations précises pour appuyer vos analyses, en expliquant toujours leur effet sur le lecteur ou le spectateur.</li>
+                    <li><strong>Lien forme-fond :</strong> Reliez toujours l'analyse des procédés littéraires (la forme) aux thèmes et idées du parcours (le fond) pour une analyse complète et pertinente.</li>
+                    <li><strong>Vocabulaire précis :</strong> Utilisez un vocabulaire technique adapté (ex : "alexandrin", "anaphore", "focalisation interne").</li>
+                    <li><strong>Effets produits :</strong> Ne vous contentez pas de nommer un procédé, expliquez l'effet qu'il produit dans le texte et par rapport au parcours.</li>
+                    <li><strong>Pratique :</strong> Entraînez-vous avec des extraits des œuvres au programme, en appliquant ces grilles d'analyse.</li>
+                </ul>
+            </section>
 
-            <h3>Détails de l'introduction :</h3>
-            <div class="highlight-box">
+            <section id="redaction-parties" class="section fade-in">
+                <h2>📝 Comment Bien Rédiger les Parties du Développement</h2>
+                <p>La rédaction des parties constitue le cœur de votre commentaire de texte au bac de français. Une structure claire et une argumentation solide sont essentielles pour démontrer votre maîtrise de l'analyse littéraire et obtenir une bonne note.</p>
+
+                <h3>🏛️ Structure générale du développement</h3>
+                <h4>Organisation des parties</h4>
+                <p>Le développement de votre commentaire doit être organisé en deux ou trois grandes parties, chacune comportant 2 à 3 sous-parties. Cette structure permet de présenter une analyse progressive et cohérente du texte étudié.</p>
+                <p>Votre plan détaillé ressemble donc à ceci :</p>
+                <ul>
+                    <li>Introduction</li>
+                    <li>I – Premier axe de lecture (2-3 sous-parties)</li>
+                    <li>II – Deuxième axe de lecture (2-3 sous-parties)</li>
+                    <li>III – Troisième axe de lecture (optionnel, 2-3 sous-parties)</li>
+                    <li>Conclusion</li>
+                </ul>
+
+                <h4>Présentation visuelle (sur votre copie d'examen)</h4>
+                <p>Respectez impérativement les règles de présentation qui influencent votre note :</p>
+                <ul>
+                    <li>Sautez 2 lignes entre l'introduction et le développement.</li>
+                    <li>Sautez 1 ligne entre les grandes parties.</li>
+                    <li>Créez un alinéa à chaque début de paragraphe.</li>
+                    <li>Ne sautez pas de lignes entre les sous-parties au sein d'une même partie.</li>
+                </ul>
+
+                <h3>🧱 Structure d'une grande partie</h3>
+                <h4>Phrase introductive</h4>
+                <p>Chaque grande partie doit commencer par une phrase introductive annonçant l'idée générale qui sera développée. Cette phrase fait le lien avec votre problématique et présente l'axe de lecture que vous allez explorer.</p>
+
+                <h4>Développement des sous-parties</h4>
+                <p>Chaque sous-partie constitue un paragraphe d'environ 15 lignes qui commence par un alinéa. La structure d'une sous-partie suit toujours le même schéma :</p>
                 <ol>
-                    <li><strong>Amorce :</strong> Situez le texte dans un contexte plus large (mouvement littéraire, événement historique)</li>
-                    <li><strong>Présentation :</strong> Nom de l'auteur, titre de l'œuvre, date, situation de l'extrait</li>
-                    <li><strong>Problématique :</strong> Question qui guide l'analyse (Comment... ? En quoi... ?)</li>
-                    <li><strong>Plan :</strong> Annonce fluide sans lourdeurs ("Nous verrons d'abord..., puis..., enfin...")</li>
+                    <li><strong>Une idée directrice :</strong> commencez par une phrase annonçant l'idée générale de cette sous-partie.</li>
+                    <li><strong>Une explication argumentée :</strong> développez votre argument en analysant les procédés littéraires.</li>
+                    <li><strong>Des exemples avec citations :</strong> illustrez par des citations courtes avec numéros de lignes.</li>
                 </ol>
-            </div>
-        </section>
 
-        <section id="procedes" class="section fade-in">
-            <h2>✨ Procédés littéraires essentiels</h2>
+                <h4>Phrase de conclusion</h4>
+                <p>Terminez chaque grande partie par une phrase de conclusion synthétisant l'idée développée. Cette phrase fait le bilan de ce qui vient d'être démontré avant de passer à l'axe suivant.</p>
 
-            <div class="procedes-grid">
-                <div class="procede-card">
-                    <h3>🎨 Procédés lexicaux</h3>
-                    <ul>
-                        <li>Champs lexicaux</li>
-                        <li>Connotation</li>
-                        <li>Niveaux de langue</li>
-                        <li>Nuances mélioratives/péjoratives</li>
-                    </ul>
-                </div>
+                <h3>✍️ Techniques de rédaction efficace</h3>
+                <h4>La règle PROCÉDÉS + ANALYSE + CITATION</h4>
+                <p>Respectez impérativement cette règle fondamentale : chaque argument doit combiner l'identification d'un procédé littéraire, son analyse et une citation qui l'illustre. Ne séparez jamais le fond et la forme.</p>
 
-                <div class="procede-card">
-                    <h3>📝 Procédés grammaticaux</h3>
-                    <ul>
-                        <li>Types de phrases</li>
-                        <li>Temps verbaux et valeurs</li>
-                        <li>Syntaxe (circonstances)</li>
-                        <li>Structures simples/complexes</li>
-                    </ul>
-                </div>
-
-                <div class="procede-card">
-                    <h3>🎭 Figures de style</h3>
-                    <ul>
-                        <li>Métaphore/Comparaison</li>
-                        <li>Hyperbole</li>
-                        <li>Répétition</li>
-                        <li>Allitération/Assonance</li>
-                        <li>Antithèse</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="success">
-                <strong>💡 Conseil clé :</strong> Ne vous contentez pas d'identifier les procédés ! Expliquez toujours leur effet sur le lecteur. Par exemple : "L'allitération en 'r' imite le bruit du vent, renforçant l'impression de chaos."
-            </div>
-        </section>
-
-        <section id="parcours-analyse" class="section fade-in">
-            <h2>🔎 Analyse Spécifique par Objet d'Étude (Parcours 2025)</h2>
-            <p>Pour réussir votre commentaire de texte au bac de français 2025, il est essentiel de maîtriser les spécificités techniques et stylistiques de chaque objet d'étude. Chaque parcours correspond à un type spécifique de texte (poésie, théâtre, roman et récit, littérature d’idées) et est associé à une œuvre avec un thème ou une problématique particulière. Ces parcours guident l’analyse et nécessitent une attention particulière aux procédés littéraires en lien avec les thèmes proposés.</p>
-            <p>Le programme du baccalauréat 2025 en français inclut quatre objets d’étude principaux : la poésie du XIXe siècle au XXIe siècle, la littérature d’idées du XVIe siècle au XVIIIe siècle, le roman et le récit du Moyen-Âge au XXIe siècle, et le théâtre du XVIIe siècle au XXIe siècle. Pour le commentaire, l'objectif est d’analyser un extrait en montrant comment la forme (procédés littéraires) produit des effets sur le lecteur, tout en reliant cette analyse aux thèmes du parcours.</p>
-
-            <h3>🎭 Le théâtre du XVIIe siècle au XXIe siècle</h3>
-            <h4>Aspects techniques fondamentaux :</h4>
-            <ul class="tips-list">
-                <li><strong>Versification :</strong> Essentielle pour les pièces classiques. L'alexandrin (12 syllabes) est central.
-                    <ul>
-                        <li><strong>Hémistiches :</strong> Les deux moitiés de l'alexandrin (6 syllabes chacune), séparées par une césure. Analyser comment la césure marque une unité de sens ou un rythme, renforçant l'effet dramatique.</li>
-                        <li><strong>Rimes :</strong> Plates, croisées, embrassées. Leur analyse aide à comprendre comment le texte soutient les thèmes du parcours.</li>
-                    </ul>
-                </li>
-                <li><strong>Structure dramatique :</strong> Situer l'extrait (exposition, nœud, dénouement) et son rôle dans la tension.</li>
-                <li><strong>Dialogue et caractérisation :</strong> Comment les répliques révèlent personnages, intentions, relations.</li>
-                <li><strong>Effets dramatiques :</strong> Didascalies, impact du langage (vers/prose) sur le spectateur.</li>
-            </ul>
-            <h4>Procédés et registres spécifiques :</h4>
-            <ul class="tips-list">
-                <li><strong>Registres dominants :</strong> Comique (répétition, quiproquo, exagération), tragique (lexique de la fatalité, désespoir, exclamations, interrogations, apostrophes), dramatique.</li>
-            </ul>
-            <h4>Œuvres au programme 2025 et parcours associés :</h4>
-            <div class="highlight-box">
+                <h4>Intégration des citations</h4>
+                <p><strong>Choix des citations :</strong> Sélectionnez des passages du texte qui soutiennent directement l'idée développée. Privilégiez des citations courtes et précises.</p>
+                <p><strong>Introduction des citations :</strong> Une citation ne doit jamais être introduite abruptement. Préparez-la avec une phrase explicative en utilisant des formulations comme :</p>
                 <ul>
-                    <li><strong>Pierre Corneille, <em>Le Menteur</em></strong> (Parcours : "mensonge et comédie")</li>
-                    <li><strong>Alfred de Musset, <em>On ne badine pas avec l’amour</em></strong> (Parcours : "les jeux du cœur et de la parole")</li>
-                    <li><strong>Nathalie Sarraute, <em>Pour un oui ou pour un non</em></strong> (Parcours : "théâtre et dispute")</li>
+                    <li>"Cet extrait illustre parfaitement..."</li>
+                    <li>"On observe ici que l'auteur..."</li>
+                    <li>"Cette citation révèle que..."</li>
                 </ul>
-            </div>
+                <p><strong>Analyse des citations :</strong> Chaque citation doit être accompagnée d'un commentaire expliquant son lien avec la démonstration. Analysez les figures de style, les effets sonores, les procédés grammaticaux en expliquant leurs effets sur le lecteur.</p>
 
-            <h3>📜 La poésie du XIXe siècle au XXIe siècle</h3>
-            <h4>Analyse de la versification et forme :</h4>
-            <ul class="tips-list">
-                <li><strong>Forme du poème :</strong> Sonnet, forme libre, calligramme, etc.</li>
-                <li><strong>Mètre :</strong> Octosyllabe, décasyllabe, alexandrin, vers libres. Les vers libres peuvent refléter une rupture avec les conventions (ex: Rimbaud).</li>
-                <li><strong>Rimes :</strong>
-                    <ul>
-                        <li><strong>Richesse :</strong> Pauvres (1 son), suffisantes (2 sons), riches (3 sons), léonines (4+ sons).</li>
-                        <li><strong>Genre :</strong> Masculines ou féminines (selon présence d'un 'e' muet final).</li>
-                        <li><strong>Disposition :</strong> Plates (aabb), croisées (abab), embrassées (abba).</li>
-                    </ul>
-                </li>
-                <li><strong>Structure des strophes.</strong></li>
-            </ul>
-            <h4>Figures de style et imagerie :</h4>
-            <ul class="tips-list">
-                <li><strong>Figures d'analogie :</strong> Métaphores, comparaisons.</li>
-                <li><strong>Effets sonores :</strong> Allitérations, assonances.</li>
-                <li><strong>Procédés d'amplification ou d'atténuation.</strong></li>
-                <li><strong>Champs lexicaux :</strong> Et leurs effets sur le lecteur.</li>
-            </ul>
-            <h4>Ton et voix :</h4>
-            <ul class="tips-list">
-                <li><strong>Registre lyrique :</strong> Expression des sentiments personnels (usage de la 1ère personne, lexique des émotions). Peut aussi être narratif, ironique, etc.</li>
-            </ul>
-            <h4>Œuvres au programme 2025 et parcours associés :</h4>
-            <div class="highlight-box">
+                <h4>Vocabulaire et style</h4>
+                <p>Utilisez un vocabulaire technique précis et spécialisé. Soignez particulièrement :</p>
                 <ul>
-                    <li><strong>Arthur Rimbaud, <em>Cahier de Douai</em></strong> (Parcours : "émancipations créatrices")</li>
-                    <li><strong>Francis Ponge, <em>La rage de l’expression</em></strong> (Parcours : "dans l’atelier du poète")</li>
-                    <li><strong>Hélène Dorion, <em>Mes forêts</em></strong> (Parcours : "la poésie, la nature, l’intime")</li>
+                    <li>La ponctuation et la syntaxe.</li>
+                    <li>La concordance des temps.</li>
+                    <li>Le registre de langue soutenu.</li>
                 </ul>
-            </div>
 
-            <h3>📖 Le roman et le récit du Moyen Âge au XXIe siècle</h3>
-            <h4>Techniques narratives :</h4>
-            <ul class="tips-list">
-                <li><strong>Type de narrateur :</strong>
-                    <ul>
-                        <li><strong>Interne :</strong> Personnage de l'histoire (principal ou témoin). Point de vue limité.</li>
-                        <li><strong>Externe / Omniscient :</strong> Extérieur à l'histoire, sait tout.</li>
-                    </ul>
-                </li>
-                <li><strong>Voix narrative et point de vue (focalisation).</strong></li>
-                <li><strong>Structure de l'extrait et construction temporelle (chronologie, analepses, prolepses).</strong></li>
-            </ul>
-            <h4>Personnages et intrigue :</h4>
-            <ul class="tips-list">
-                <li><strong>Caractérisation :</strong> Directe (description explicite) ou indirecte (par actions, paroles, pensées). Leur évolution et fonction.</li>
-                <li><strong>Intrigue :</strong> Comment elle se développe et maintient l'intérêt.</li>
-                <li><strong>Thèmes et motifs :</strong> Idées centrales et leur traitement.</li>
-            </ul>
-            <h4>Style et registres romanesques :</h4>
-            <ul class="tips-list">
-                <li><strong>Registres :</strong> Réaliste, pathétique (émouvoir par la souffrance, lexique des émotions, ponctuation expressive), épique (grandeur des personnages/situations), satirique, etc.</li>
-                <li><strong>Choix stylistiques :</strong> Champs lexicaux, figures de style.</li>
-            </ul>
-            <h4>Œuvres au programme 2025 et parcours associés :</h4>
-            <div class="highlight-box">
-                <ul>
-                    <li><strong>Abbé Prévost, <em>Manon Lescaut</em></strong> (Parcours : "personnages en marge, plaisirs du romanesque")</li>
-                    <li><strong>Honoré de Balzac, <em>La Peau de chagrin</em></strong> (Parcours : "les romans de l'énergie : création et destruction")</li>
-                    <li><strong>Colette, <em>Sido</em> suivi de <em>Les Vrilles de la vigne</em></strong> (Parcours : "la célébration du monde")</li>
-                </ul>
-            </div>
-
-            <h3>💡 La littérature d'idées du XVIe au XVIIIe siècle</h3>
-            <h4>Structure et procédés argumentatifs :</h4>
-            <ul class="tips-list">
-                <li><strong>Objectif :</strong> Convaincre (par la raison) ou persuader (par les sentiments).</li>
-                <li><strong>Thèse :</strong> Idée principale défendue par l'auteur.</li>
-                <li><strong>Arguments et exemples :</strong> Preuves et illustrations soutenant la thèse.</li>
-                <li><strong>Organisation logique :</strong> Connecteurs, progression du raisonnement.</li>
-            </ul>
-            <h4>Dispositifs rhétoriques et figures de style :</h4>
-            <ul class="tips-list">
-                <li><strong>Figures d'analogie :</strong> Métaphore argumentative, comparaison.</li>
-                <li><strong>Figures d'insistance :</strong> Répétition, anaphore, parallélisme, dérivation.</li>
-                <li><strong>Figures d'amplification :</strong> Hyperbole, gradation.</li>
-                <li><strong>Figures d'atténuation :</strong> Euphémisme, litote.</li>
-                <li><strong>Figures d'opposition :</strong> Antithèse, oxymore, chiasme.</li>
-                <li><strong>Ironie :</strong> Dire le contraire de ce que l'on pense pour dénoncer.</li>
-            </ul>
-            <h4>Contexte et registres :</h4>
-            <ul class="tips-list">
-                <li><strong>Contexte historique et philosophique :</strong> Relier le texte aux idées de son époque (ex: Lumières, Renaissance).</li>
-                <li><strong>Registres :</strong> Polémique (critiquer vivement), satirique (tourner en ridicule pour dénoncer), ironique, didactique.</li>
-            </ul>
-            <h4>Œuvres au programme 2025 et parcours associés :</h4>
-            <div class="highlight-box">
-                <ul>
-                    <li><strong>François Rabelais, <em>Gargantua</em></strong> (Livres I à XI) (Parcours : "rire et savoir")</li>
-                    <li><strong>Jean de La Bruyère, <em>Les Caractères</em></strong> (Livres V à X) (Parcours : "la comédie sociale")</li>
-                    <li><strong>Olympe de Gouges, <em>Déclaration des droits de la femme et de la citoyenne</em></strong> (du préambule au postambule) (Parcours : "écrire et combattre pour l’égalité")</li>
-                </ul>
-            </div>
-
-            <h3>📊 Tableau récapitulatif des éléments clés par parcours</h3>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Parcours / Objet d'étude</th>
-                            <th>Type de texte</th>
-                            <th>Éléments importants à analyser</th>
-                            <th>Exemple de focus</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Théâtre</strong><br>(mensonge, jeux du cœur, dispute)</td>
-                            <td>Pièce (vers ou prose)</td>
-                            <td>
-                                <ul>
-                                    <li>Versification (alexandrins, hémistiches, césure, rimes)</li>
-                                    <li>Structure dramatique (actes, scènes, exposition, nœud, dénouement)</li>
-                                    <li>Dialogue (répliques, stichomythies, tirades, monologues)</li>
-                                    <li>Didascalies</li>
-                                    <li>Registres (comique, tragique, dramatique)</li>
-                                    <li>Effets sur le spectateur</li>
-                                </ul>
-                            </td>
-                            <td>Analyse des alexandrins et de la progression dramatique dans <em>Le Menteur</em> (Corneille) en lien avec "mensonge et comédie".</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Poésie</strong><br>(émancipation, atelier du poète, nature et intime)</td>
-                            <td>Poème</td>
-                            <td>
-                                <ul>
-                                    <li>Forme (sonnet, vers libres, etc.)</li>
-                                    <li>Versification (mètre, rimes, strophes, rythme)</li>
-                                    <li>Figures de style (métaphores, comparaisons, allitérations, assonances)</li>
-                                    <li>Imagerie et symboles</li>
-                                    <li>Ton et voix poétique (lyrisme, engagement, etc.)</li>
-                                    <li>Relation forme/sens</li>
-                                </ul>
-                            </td>
-                            <td>Étude des vers libres et des images chez Rimbaud (<em>Cahier de Douai</em>) pour illustrer "émancipations créatrices".</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Roman et Récit</strong><br>(marginaux, énergie créatrice/destructrice, célébration du monde)</td>
-                            <td>Extrait narratif</td>
-                            <td>
-                                <ul>
-                                    <li>Statut du narrateur et focalisation</li>
-                                    <li>Structure narrative (ordre du récit, rythme)</li>
-                                    <li>Caractérisation des personnages (physique, morale, sociale)</li>
-                                    <li>Cadre spatio-temporel</li>
-                                    <li>Thèmes et motifs</li>
-                                    <li>Style et registres (réaliste, pathétique, épique, etc.)</li>
-                                </ul>
-                            </td>
-                            <td>Analyse du point de vue narratif et de la construction du personnage marginal dans <em>Manon Lescaut</em> (Abbé Prévost).</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Littérature d'idées</strong><br>(rire et savoir, comédie sociale, écrire et combattre)</td>
-                            <td>Texte argumentatif</td>
-                            <td>
-                                <ul>
-                                    <li>Thèse, arguments, exemples</li>
-                                    <li>Structure argumentative (types de raisonnement)</li>
-                                    <li>Procédés rhétoriques (persuasion, conviction)</li>
-                                    <li>Figures de style argumentatives (ironie, hyperbole, antithèse)</li>
-                                    <li>Implication de l'auteur et du destinataire</li>
-                                    <li>Contexte historique, social, philosophique</li>
-                                    <li>Ton et registres (polémique, satirique, didactique)</li>
-                                </ul>
-                            </td>
-                            <td>Examen de la structure argumentative et des procédés de persuasion dans la <em>Déclaration des droits de la femme et de la citoyenne</em> (Olympe de Gouges) en lien avec "écrire et combattre pour l’égalité".</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-
-            <h3>📌 Conseils transversaux pour l'analyse</h3>
-            <ul class="tips-list">
-                <li><strong>Identifier le parcours :</strong> Commencez par identifier le type de texte et son parcours pour orienter votre plan. Si c'est du théâtre en vers, une partie sur la versification est pertinente.</li>
-                <li><strong>Citations :</strong> Utilisez des citations précises pour appuyer vos analyses, en expliquant toujours leur effet sur le lecteur ou le spectateur.</li>
-                <li><strong>Lien forme-fond :</strong> Reliez toujours l'analyse des procédés littéraires (la forme) aux thèmes et idées du parcours (le fond) pour une analyse complète et pertinente.</li>
-                <li><strong>Vocabulaire précis :</strong> Utilisez un vocabulaire technique adapté (ex : "alexandrin", "anaphore", "focalisation interne").</li>
-                <li><strong>Effets produits :</strong> Ne vous contentez pas de nommer un procédé, expliquez l'effet qu'il produit dans le texte et par rapport au parcours.</li>
-                <li><strong>Pratique :</strong> Entraînez-vous avec des extraits des œuvres au programme, en appliquant ces grilles d'analyse.</li>
-            </ul>
-        </section>
-
-        <section id="redaction-parties" class="section fade-in">
-            <h2>📝 Comment Bien Rédiger les Parties du Développement</h2>
-            <p>La rédaction des parties constitue le cœur de votre commentaire de texte au bac de français. Une structure claire et une argumentation solide sont essentielles pour démontrer votre maîtrise de l'analyse littéraire et obtenir une bonne note.</p>
-
-            <h3>🏛️ Structure générale du développement</h3>
-            <h4>Organisation des parties</h4>
-            <p>Le développement de votre commentaire doit être organisé en deux ou trois grandes parties, chacune comportant 2 à 3 sous-parties. Cette structure permet de présenter une analyse progressive et cohérente du texte étudié.</p>
-            <p>Votre plan détaillé ressemble donc à ceci :</p>
-            <ul>
-                <li>Introduction</li>
-                <li>I – Premier axe de lecture (2-3 sous-parties)</li>
-                <li>II – Deuxième axe de lecture (2-3 sous-parties)</li>
-                <li>III – Troisième axe de lecture (optionnel, 2-3 sous-parties)</li>
-                <li>Conclusion</li>
-            </ul>
-
-            <h4>Présentation visuelle (sur votre copie d'examen)</h4>
-            <p>Respectez impérativement les règles de présentation qui influencent votre note :</p>
-            <ul>
-                <li>Sautez 2 lignes entre l'introduction et le développement.</li>
-                <li>Sautez 1 ligne entre les grandes parties.</li>
-                <li>Créez un alinéa à chaque début de paragraphe.</li>
-                <li>Ne sautez pas de lignes entre les sous-parties au sein d'une même partie.</li>
-            </ul>
-
-            <h3>🧱 Structure d'une grande partie</h3>
-            <h4>Phrase introductive</h4>
-            <p>Chaque grande partie doit commencer par une phrase introductive annonçant l'idée générale qui sera développée. Cette phrase fait le lien avec votre problématique et présente l'axe de lecture que vous allez explorer.</p>
-
-            <h4>Développement des sous-parties</h4>
-            <p>Chaque sous-partie constitue un paragraphe d'environ 15 lignes qui commence par un alinéa. La structure d'une sous-partie suit toujours le même schéma :</p>
-            <ol>
-                <li><strong>Une idée directrice :</strong> commencez par une phrase annonçant l'idée générale de cette sous-partie.</li>
-                <li><strong>Une explication argumentée :</strong> développez votre argument en analysant les procédés littéraires.</li>
-                <li><strong>Des exemples avec citations :</strong> illustrez par des citations courtes avec numéros de lignes.</li>
-            </ol>
-
-            <h4>Phrase de conclusion</h4>
-            <p>Terminez chaque grande partie par une phrase de conclusion synthétisant l'idée développée. Cette phrase fait le bilan de ce qui vient d'être démontré avant de passer à l'axe suivant.</p>
-
-            <h3>✍️ Techniques de rédaction efficace</h3>
-            <h4>La règle PROCÉDÉS + ANALYSE + CITATION</h4>
-            <p>Respectez impérativement cette règle fondamentale : chaque argument doit combiner l'identification d'un procédé littéraire, son analyse et une citation qui l'illustre. Ne séparez jamais le fond et la forme.</p>
-
-            <h4>Intégration des citations</h4>
-            <p><strong>Choix des citations :</strong> Sélectionnez des passages du texte qui soutiennent directement l'idée développée. Privilégiez des citations courtes et précises.</p>
-            <p><strong>Introduction des citations :</strong> Une citation ne doit jamais être introduite abruptement. Préparez-la avec une phrase explicative en utilisant des formulations comme :</p>
-            <ul>
-                <li>"Cet extrait illustre parfaitement..."</li>
-                <li>"On observe ici que l'auteur..."</li>
-                <li>"Cette citation révèle que..."</li>
-            </ul>
-            <p><strong>Analyse des citations :</strong> Chaque citation doit être accompagnée d'un commentaire expliquant son lien avec la démonstration. Analysez les figures de style, les effets sonores, les procédés grammaticaux en expliquant leurs effets sur le lecteur.</p>
-
-            <h4>Vocabulaire et style</h4>
-            <p>Utilisez un vocabulaire technique précis et spécialisé. Soignez particulièrement :</p>
-            <ul>
-                <li>La ponctuation et la syntaxe.</li>
-                <li>La concordance des temps.</li>
-                <li>Le registre de langue soutenu.</li>
-            </ul>
-
-            <h3>🔗 Transitions entre les parties</h3>
-            <h4>Importance des transitions</h4>
-            <p>Les transitions constituent un lien essentiel entre vos parties. Elles permettent au lecteur de suivre votre raisonnement et vous aident à vérifier la cohérence de votre plan.</p>
-            <h4>Structure d'une transition</h4>
-            <p>Une transition efficace comprend trois éléments :</p>
-            <ol>
-                <li><strong>Bilan :</strong> résumez rapidement ce qui vient d'être démontré.</li>
-                <li><strong>Lien logique :</strong> établissez la connexion avec ce qui va suivre.</li>
-                <li><strong>Annonce :</strong> présentez le nouvel axe qui sera développé.</li>
-            </ol>
-            <h4>Placement des transitions</h4>
-            <p>Vous pouvez placer la transition soit à la fin de la partie précédente, soit dans un petit paragraphe séparé entre les deux parties. Dans tous les cas, sautez une ligne après pour bien marquer le passage à la partie suivante sur votre copie.</p>
-
-            <h3>📈 Connecteurs logiques et progression</h3>
-            <h4>Utilisation des connecteurs</h4>
-            <p>Utilisez systématiquement des connecteurs logiques pour articuler vos idées :</p>
-            <ul>
-                <li><strong>Pour ajouter :</strong> "de plus", "en outre", "par ailleurs"</li>
-                <li><strong>Pour opposer :</strong> "toutefois", "néanmoins", "cependant"</li>
-                <li><strong>Pour conclure :</strong> "ainsi", "donc", "en définitive"</li>
-            </ul>
-            <h4>Progression logique</h4>
-            <p>Veillez à la progression de votre analyse en allant du plus évident au plus complexe. Chaque partie doit apporter un éclairage nouveau sur le texte tout en répondant à votre problématique.</p>
-
-            <h3>❌ Erreurs à éviter</h3>
-            <h4>Erreurs de fond</h4>
-            <ul>
-                <li>Ne paraphrasez jamais le texte, analysez-le et interprétez-le.</li>
-                <li>N'énumérez pas les procédés sans les analyser.</li>
-                <li>Ne répétez pas les mêmes idées dans plusieurs sous-parties.</li>
-                <li>Ne faites pas dire au texte ce qu'il ne dit pas.</li>
-            </ul>
-            <h4>Erreurs de forme (sur votre copie d'examen)</h4>
-            <ul>
-                <li>N'utilisez pas d'abréviations.</li>
-                <li>Ne laissez pas apparaître les titres de votre plan (I, II, 1, 2, etc.).</li>
-                <li>N'oubliez pas de souligner les titres d'œuvres et de mettre les citations entre guillemets.</li>
-                <li>Évitez les répétitions et soignez votre style.</li>
-            </ul>
-            <p><em>La maîtrise de ces techniques de rédaction vous permettra de produire un commentaire structuré, analysé et convaincant qui démontrera votre compréhension approfondie du texte étudié.</em></p>
-            
-            <h3>🔍 Exemples Concrets d'Analyse par Objet d'Étude</h3>
-
-            <div class="example-block">
-                <h4>Exemple 1 : Le roman et le récit</h4>
-                <p><strong>Extrait à analyser (hypothétique, inspiré de Manon Lescaut de l’Abbé Prévost) :</strong></p>
-                <blockquote>« Je trouvais de la joie dans cet exercice de ma liberté. » (ligne X)</blockquote>
-                <h5>Partie I : La quête de liberté du personnage principal</h5>
-                <h6>Sous-partie 1 : L’expression du désir d’émancipation</h6>
-                <p><strong>Idée directrice :</strong> Le personnage principal exprime un vif désir de s’affranchir des contraintes sociales.</p>
-                <p><strong>Analyse :</strong> L’emploi du pronom « je » met en avant la subjectivité du narrateur. L’expression « exercice de ma liberté » souligne l’importance de l’action et du choix personnel dans la quête d’indépendance.</p>
-                <p><strong>Citation :</strong> « Je trouvais de la joie dans cet exercice de ma liberté. » (ligne X)</p>
-                <p><strong>Effet :</strong> Le lecteur perçoit la force du sentiment de liberté ressenti par le personnage, ce qui le rend attachant et humain.</p>
-                <h6>Sous-partie 2 : Le paradoxe de la liberté</h6>
-                <p><strong>Idée directrice :</strong> Cette liberté est cependant fragile et menacée par les circonstances.</p>
-                <p><strong>Analyse :</strong> Le verbe « trouvais » à l'imparfait (valeur descriptive ou d'habitude révolue ici, plutôt que passé simple pour un moment éphémère comme suggéré dans le texte source ; j'ai gardé "trouvais" comme dans le texte source de l'exemple) suggère un état passé. Si c'était un passé simple, il marquerait un moment ponctuel. L'imparfait ici peut aussi souligner une joie qui s'inscrivait dans une certaine durée mais qui est maintenant révolue. Cela crée une tension narrative et annonce un retournement possible de situation.</p>
-                <p><strong>Effet :</strong> Le lecteur est incité à s’interroger sur la durabilité de la liberté du personnage.</p>
-            </div>
-
-            <div class="example-block">
-                <h4>Exemple 2 : Le théâtre</h4>
-                <p><strong>Extrait à analyser (inspiré de On ne badine pas avec l’amour de Musset) :</strong></p>
-                <blockquote>« Le cœur humain est un mystère. » (ligne Y)</blockquote>
-                <h5>Partie II : L’exploration des sentiments dans le théâtre</h5>
-                <h6>Sous-partie 1 : La mise en scène de l’ambiguïté des émotions</h6>
-                <p><strong>Idée directrice :</strong> Le texte théâtral met en scène la complexité des sentiments.</p>
-                <p><strong>Analyse :</strong> L’affirmation sentencieuse « le cœur humain est un mystère » fonctionne comme une maxime. L'auteur suggère ainsi que les émotions ne sont jamais totalement accessibles, même aux personnages eux-mêmes.</p>
-                <p><strong>Citation :</strong> « Le cœur humain est un mystère. » (ligne Y)</p>
-                <p><strong>Effet :</strong> Le spectateur est invité à s’interroger sur la sincérité et la nature profonde des sentiments des personnages, ce qui enrichit la dimension psychologique de la pièce.</p>
-                <h6>Sous-partie 2 : Les procédés stylistiques pour exprimer l’indéfinissable</h6>
-                <p><strong>Idée directrice :</strong> Musset utilise des images et des figures de style pour traduire l’ineffable.</p>
-                <p><strong>Analyse :</strong> L’expression « mystère » renvoie à l’idée d’inconnu. L’utilisation du présent de vérité générale (« est ») universalise le propos, lui conférant une portée philosophique. La concision de la phrase lui donne un caractère percutant.</p>
-                <p><strong>Effet :</strong> Le texte gagne en profondeur et en universalité, touchant le lecteur ou le spectateur par sa résonance intemporelle sur la condition humaine.</p>
-            </div>
-
-            <div class="example-block">
-                <h4>Exemple 3 : La poésie</h4>
-                <p><strong>Extrait à analyser (inspiré de Rimbaud, Cahier de Douai) :</strong></p>
-                <blockquote>« J’irai loin, bien loin, comme un bohémien. » (ligne Z)</blockquote>
-                <h5>Partie III : Le désir d’évasion dans la poésie</h5>
-                <h6>Sous-partie 1 : L’expression du désir de liberté</h6>
-                <p><strong>Idée directrice :</strong> Le poète exprime un besoin impérieux de fuir la réalité et les contraintes.</p>
-                <p><strong>Analyse :</strong> La répétition de l’adverbe « loin », intensifiée par « bien loin », insiste sur l’ampleur du désir d’évasion. La comparaison « comme un bohémien » introduit une image de liberté, d’errance et de marginalité choisie, typique de l'imaginaire romantique et rimbaldien.</p>
-                <p><strong>Citation :</strong> « J’irai loin, bien loin, comme un bohémien. » (ligne Z)</p>
-                <p><strong>Effet :</strong> Le lecteur est emporté par le mouvement d'éloignement exprimé dans le poème et peut partager l’aspiration du poète à une vie affranchie.</p>
-                <h6>Sous-partie 2 : Le rythme et la musicalité au service de l'évasion</h6>
-                <p><strong>Idée directrice :</strong> La forme poétique renforce le sentiment d’évasion.</p>
-                <p><strong>Analyse :</strong> Le futur simple (« J’irai ») projette résolument vers l'avenir, marquant la détermination du poète. Le rythme du vers, potentiellement un octosyllabe ou un alexandrin selon le poème d'origine, peut contribuer à cette impression de mouvement (par exemple, un rythme enlevé avec des accents dynamiques). L’allitération en « l » (« loin », « bohémien ») et potentiellement d'autres sonorités pourraient créer une impression de fluidité et de légèreté, évoquant le voyage.</p>
-                <p><strong>Effet :</strong> La musicalité du vers, combinée à la projection dans le futur et à l'image du bohémien, accentue la sensation de liberté et d'un départ imminent.</p>
-            </div>
-
-            <div class="example-block">
-                <h4>Exemple 4 : La littérature d’idées</h4>
-                <p><strong>Extrait à analyser (inspiré de Montaigne, Essais, « Des Cannibales » plutôt que « Sur l’inégalité entre les hommes » pour la citation donnée) :</strong></p>
-                <blockquote>« Chacun appelle barbarie ce qui n’est pas de son usage. » (ligne A)</blockquote>
-                <h5>Partie IV : La remise en cause des préjugés et la relativité culturelle</h5>
-                <h6>Sous-partie 1 : La critique de l’ethnocentrisme</h6>
-                <p><strong>Idée directrice :</strong> Montaigne dénonce la tendance humaine à juger les autres cultures à l'aune de ses propres coutumes, considérées comme la norme universelle.</p>
-                <p><strong>Analyse :</strong> L’emploi du pronom indéfini « Chacun » généralise le propos, soulignant un travers universel. Le terme « barbarie », utilisé de manière ironique par Montaigne, est retourné contre ceux qui l'emploient : il montre que ce jugement est subjectif et relatif ("ce qui n’est pas de son usage"). L’utilisation du présent de vérité générale confère à cette affirmation une portée intemporelle.</p>
-                <p><strong>Citation :</strong> « Chacun appelle barbarie ce qui n’est pas de son usage. » (ligne A)</p>
-                <p><strong>Effet :</strong> Le lecteur est invité à une réflexion critique sur ses propres préjugés et à prendre conscience de la relativité des valeurs et des jugements culturels.</p>
-                <h6>Sous-partie 2 : La portée humaniste et philosophique de la réflexion</h6>
-                <p><strong>Idée directrice :</strong> À travers cette critique, l’auteur prône l’ouverture d’esprit, la tolérance et une forme de scepticisme philosophique.</p>
-                <p><strong>Analyse :</strong> Montaigne utilise un style argumentatif clair et direct. La structure de la phrase, simple et concise, lui donne la force d'une maxime. En exposant ce mécanisme de jugement, il incite implicitement à suspendre son jugement hâtif et à considérer l'autre avec plus de curiosité et moins d'arrogance.</p>
-                <p><strong>Effet :</strong> Le texte dépasse la simple observation pour prendre une dimension pédagogique et humaniste, encourageant une posture intellectuelle plus humble et ouverte face à l'altérité.</p>
-            </div>
-
-        </section>
-
-        <section id="conseils" class="section fade-in">
-            <h2>💡 Conseils de rédaction</h2>
-
-            <h3>Règles de rédaction essentielles :</h3>
-            <ul class="tips-list">
-                <li><strong>Connecteurs logiques :</strong> de plus, en outre, toutefois, néanmoins</li>
-                <li><strong>Citations :</strong> entre guillemets avec numéros de lignes</li>
-                <li><strong>Effets :</strong> expliquez l'impact des procédés sur le lecteur</li>
-                <li><strong>Évitez la paraphrase :</strong> expliquez et interprétez, ne résumez pas</li>
-                <li><strong>Analyse approfondie :</strong> dépassez la description pour aller vers l'interprétation</li>
-            </ul>
-
-            <h3>Erreurs fréquentes à éviter :</h3>
-            <div class="warning">
-                <ul>
-                    <li>❌ Séparer le fond de la forme</li>
-                    <li>❌ Paraphraser le texte</li>
-                    <li>❌ Ignorer la structure du texte</li>
-                    <li>❌ Plan linéaire (suivre l'ordre du texte)</li>
-                    <li>❌ Analyse isolée d'un procédé sans interprétation globale</li>
-                    <li>❌ Baser une sous-partie sur un seul procédé</li>
-                </ul>
-            </div>
-
-            <h3>Stratégie d'examen :</h3>
-            <div class="highlight-box">
+                <h3>🔗 Transitions entre les parties</h3>
+                <h4>Importance des transitions</h4>
+                <p>Les transitions constituent un lien essentiel entre vos parties. Elles permettent au lecteur de suivre votre raisonnement et vous aident à vérifier la cohérence de votre plan.</p>
+                <h4>Structure d'une transition</h4>
+                <p>Une transition efficace comprend trois éléments :</p>
                 <ol>
-                    <li><strong>Premières minutes :</strong> lire et relire le texte, identifier procédés et thèmes</li>
-                    <li><strong>Plan détaillé :</strong> sur le brouillon, organiser axes et sous-parties</li>
-                    <li><strong>Introduction/Conclusion :</strong> rédiger d'abord sur le brouillon</li>
-                    <li><strong>Relecture régulière :</strong> toutes les 10-15 minutes, pas seulement à la fin</li>
+                    <li><strong>Bilan :</strong> résumez rapidement ce qui vient d'être démontré.</li>
+                    <li><strong>Lien logique :</strong> établissez la connexion avec ce qui va suivre.</li>
+                    <li><strong>Annonce :</strong> présentez le nouvel axe qui sera développé.</li>
                 </ol>
-            </div>
-        </section>
+                <h4>Placement des transitions</h4>
+                <p>Vous pouvez placer la transition soit à la fin de la partie précédente, soit dans un petit paragraphe séparé entre les deux parties. Dans tous les cas, sautez une ligne après pour bien marquer le passage à la partie suivante sur votre copie.</p>
 
-        <section id="preparation" class="section fade-in">
-            <h2>📖 Préparation et révisions</h2>
+                <h3>📈 Connecteurs logiques et progression</h3>
+                <h4>Utilisation des connecteurs</h4>
+                <p>Utilisez systématiquement des connecteurs logiques pour articuler vos idées :</p>
+                <ul>
+                    <li><strong>Pour ajouter :</strong> "de plus", "en outre", "par ailleurs"</li>
+                    <li><strong>Pour opposer :</strong> "toutefois", "néanmoins", "cependant"</li>
+                    <li><strong>Pour conclure :</strong> "ainsi", "donc", "en définitive"</li>
+                </ul>
+                <h4>Progression logique</h4>
+                <p>Veillez à la progression de votre analyse en allant du plus évident au plus complexe. Chaque partie doit apporter un éclairage nouveau sur le texte tout en répondant à votre problématique.</p>
 
-            <h3>Conseils de révision :</h3>
-            <ul class="tips-list">
-                <li><strong>Fiches de révision :</strong> sur les textes de votre corpus oral avec observations pertinentes</li>
-                <li><strong>Entraînement problématiques :</strong> compétence importante pour écrit et oral</li>
-                <li><strong>Maîtrise des procédés :</strong> connaître les effets des procédés littéraires</li>
-                <li><strong>Pratique régulière :</strong> s'entraîner avec des textes du programme en lien avec leur parcours</li>
-            </ul>
+                <h3>❌ Erreurs à éviter</h3>
+                <h4>Erreurs de fond</h4>
+                <ul>
+                    <li>Ne paraphrasez jamais le texte, analysez-le et interprétez-le.</li>
+                    <li>N'énumérez pas les procédés sans les analyser.</li>
+                    <li>Ne répétez pas les mêmes idées dans plusieurs sous-parties.</li>
+                    <li>Ne faites pas dire au texte ce qu'il ne dit pas.</li>
+                </ul>
+                <h4>Erreurs de forme (sur votre copie d'examen)</h4>
+                <ul>
+                    <li>N'utilisez pas d'abréviations.</li>
+                    <li>Ne laissez pas apparaître les titres de votre plan (I, II, 1, 2, etc.).</li>
+                    <li>N'oubliez pas de souligner les titres d'œuvres et de mettre les citations entre guillemets.</li>
+                    <li>Évitez les répétitions et soignez votre style.</li>
+                </ul>
+                <p><em>La maîtrise de ces techniques de rédaction vous permettra de produire un commentaire structuré, analysé et convaincant qui démontrera votre compréhension approfondie du texte étudié.</em></p>
 
-            <h3>Programme 2025 :</h3>
-            <div class="highlight-box">
-                <p>Le programme inclut des œuvres pour chaque objet d'étude (poésie, roman, théâtre, littérature d'idées), chacune associée à un parcours spécifique. La méthodologie du commentaire doit s'adapter à ces spécificités. Les notes comptent pour le dossier Parcoursup, rendant cet exercice crucial.</p>
-            </div>
+                <h3>🔍 Exemples Concrets d'Analyse par Objet d'Étude</h3>
 
-            <h3>Ressources supplémentaires :</h3>
-            <ul class="tips-list">
-                <li>📚 CommentaireComposé.fr : exemples et méthodes détaillées</li>
-                <li>📖 Le Figaro Étudiant : conseils méthodologiques</li>
-                <li>🎯 Studyrama : fiches de révision téléchargeables</li>
-                <li>💡 AuFutur.fr : explications sur les œuvres au programme</li>
-            </ul>
+                <div class="example-block">
+                    <h4>Exemple 1 : Le roman et le récit</h4>
+                    <p><strong>Extrait à analyser (hypothétique, inspiré de Manon Lescaut de l’Abbé Prévost) :</strong></p>
+                    <blockquote>« Je trouvais de la joie dans cet exercice de ma liberté. » (ligne X)</blockquote>
+                    <h5>Partie I : La quête de liberté du personnage principal</h5>
+                    <h6>Sous-partie 1 : L’expression du désir d’émancipation</h6>
+                    <p><strong>Idée directrice :</strong> Le personnage principal exprime un vif désir de s’affranchir des contraintes sociales.</p>
+                    <p><strong>Analyse :</strong> L’emploi du pronom « je » met en avant la subjectivité du narrateur. L’expression « exercice de ma liberté » souligne l’importance de l’action et du choix personnel dans la quête d’indépendance.</p>
+                    <p><strong>Citation :</strong> « Je trouvais de la joie dans cet exercice de ma liberté. » (ligne X)</p>
+                    <p><strong>Effet :</strong> Le lecteur perçoit la force du sentiment de liberté ressenti par le personnage, ce qui le rend attachant et humain.</p>
+                    <h6>Sous-partie 2 : Le paradoxe de la liberté</h6>
+                    <p><strong>Idée directrice :</strong> Cette liberté est cependant fragile et menacée par les circonstances.</p>
+                    <p><strong>Analyse :</strong> Le verbe « trouvais » à l'imparfait (valeur descriptive ou d'habitude révolue ici, plutôt que passé simple pour un moment éphémère comme suggéré dans le texte source ; j'ai gardé "trouvais" comme dans le texte source de l'exemple) suggère un état passé. Si c'était un passé simple, il marquerait un moment ponctuel. L'imparfait ici peut aussi souligner une joie qui s'inscrivait dans une certaine durée mais qui est maintenant révolue. Cela crée une tension narrative et annonce un retournement possible de situation.</p>
+                    <p><strong>Effet :</strong> Le lecteur est incité à s’interroger sur la durabilité de la liberté du personnage.</p>
+                </div>
 
-            <div class="success">
-                <strong>🎯 Objectif final :</strong> Cette méthode structurée, appliquée avec rigueur et régularité, vous permettra d'aborder sereinement cette épreuve décisive pour votre parcours scolaire !
-            </div>
-        </section>
-    </div>
+                <div class="example-block">
+                    <h4>Exemple 2 : Le théâtre</h4>
+                    <p><strong>Extrait à analyser (inspiré de On ne badine pas avec l’amour de Musset) :</strong></p>
+                    <blockquote>« Le cœur humain est un mystère. » (ligne Y)</blockquote>
+                    <h5>Partie II : L’exploration des sentiments dans le théâtre</h5>
+                    <h6>Sous-partie 1 : La mise en scène de l’ambiguïté des émotions</h6>
+                    <p><strong>Idée directrice :</strong> Le texte théâtral met en scène la complexité des sentiments.</p>
+                    <p><strong>Analyse :</strong> L’affirmation sentencieuse « le cœur humain est un mystère » fonctionne comme une maxime. L'auteur suggère ainsi que les émotions ne sont jamais totalement accessibles, même aux personnages eux-mêmes.</p>
+                    <p><strong>Citation :</strong> « Le cœur humain est un mystère. » (ligne Y)</p>
+                    <p><strong>Effet :</strong> Le spectateur est invité à s’interroger sur la sincérité et la nature profonde des sentiments des personnages, ce qui enrichit la dimension psychologique de la pièce.</p>
+                    <h6>Sous-partie 2 : Les procédés stylistiques pour exprimer l’indéfinissable</h6>
+                    <p><strong>Idée directrice :</strong> Musset utilise des images et des figures de style pour traduire l’ineffable.</p>
+                    <p><strong>Analyse :</strong> L’expression « mystère » renvoie à l’idée d’inconnu. L’utilisation du présent de vérité générale (« est ») universalise le propos, lui conférant une portée philosophique. La concision de la phrase lui donne un caractère percutant.</p>
+                    <p><strong>Effet :</strong> Le texte gagne en profondeur et en universalité, touchant le lecteur ou le spectateur par sa résonance intemporelle sur la condition humaine.</p>
+                </div>
 
-    <button class="back-to-top" onclick="scrollToTop()">↑</button>
+                <div class="example-block">
+                    <h4>Exemple 3 : La poésie</h4>
+                    <p><strong>Extrait à analyser (inspiré de Rimbaud, Cahier de Douai) :</strong></p>
+                    <blockquote>« J’irai loin, bien loin, comme un bohémien. » (ligne Z)</blockquote>
+                    <h5>Partie III : Le désir d’évasion dans la poésie</h5>
+                    <h6>Sous-partie 1 : L’expression du désir de liberté</h6>
+                    <p><strong>Idée directrice :</strong> Le poète exprime un besoin impérieux de fuir la réalité et les contraintes.</p>
+                    <p><strong>Analyse :</strong> La répétition de l’adverbe « loin », intensifiée par « bien loin », insiste sur l’ampleur du désir d’évasion. La comparaison « comme un bohémien » introduit une image de liberté, d’errance et de marginalité choisie, typique de l'imaginaire romantique et rimbaldien.</p>
+                    <p><strong>Citation :</strong> « J’irai loin, bien loin, comme un bohémien. » (ligne Z)</p>
+                    <p><strong>Effet :</strong> Le lecteur est emporté par le mouvement d'éloignement exprimé dans le poème et peut partager l’aspirantion du poète à une vie affranchie.</p>
+                    <h6>Sous-partie 2 : Le rythme et la musicalité au service de l'évasion</h6>
+                    <p><strong>Idée directrice :</strong> La forme poétique renforce le sentiment d’évasion.</p>
+                    <p><strong>Analyse :</strong> Le futur simple (« J’irai ») projette résolument vers l'avenir, marquant la détermination du poète. Le rythme du vers, potentiellement un octosyllabe ou un alexandrin selon le poème d'origine, peut contribuer à cette impression de mouvement (par exemple, un rythme enlevé avec des accents dynamiques). L’allitération en « l » (« loin », « bohémien ») et potentiellement d'autres sonorités pourraient créer une impression de fluidité et de légèreté, évoquant le voyage.</p>
+                    <p><strong>Effet :</strong> La musicalité du vers, combinée à la projection dans le futur et à l'image du bohémien, accentue la sensation de liberté et d'un départ imminent.</p>
+                </div>
 
-    <script>
-        // Animation au scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+                <div class="example-block">
+                    <h4>Exemple 4 : La littérature d’idées</h4>
+                    <p><strong>Extrait à analyser (hypothétique, inspiré de Montaigne, Essais, « Des Cannibales » plutôt que « Sur l’inégalité entre les hommes » pour la citation donnée) :</strong></p>
+                    <blockquote>« Chacun appelle barbarie ce qui n’est pas de son usage. » (ligne A)</blockquote>
+                    <h5>Partie IV : La remise en cause des préjugés et la relativité culturelle</h5>
+                    <h6>Sous-partie 1 : La critique de l’ethnocentrisme</h6>
+                    <p><strong>Idée directrice :</strong> Montaigne dénonce la tendance humaine à juger les autres cultures à l'aune de ses propres coutumes, considérées comme la norme universelle.</p>
+                    <p><strong>Analyse :</strong> L’emploi du pronom indéfini « Chacun » généralise le propos, soulignant un travers universel. Le terme « barbarie », utilisé de manière ironique par Montaigne, est retourné contre ceux qui l'emploient : il montre que ce jugement est subjectif et relatif ("ce qui n’est pas de son usage"). L’utilisation du présent de vérité générale confère à cette affirmation une portée intemporelle.</p>
+                    <p><strong>Citation :</strong> « Chacun appelle barbarie ce qui n’est pas de son usage. » (ligne A)</p>
+                    <p><strong>Effet :</strong> Le lecteur est invité à une réflexion critique sur ses propres préjugés et à prendre conscience de la relativité des valeurs et des jugements culturels.</p>
+                    <h6>Sous-partie 2 : La portée humaniste et philosophique de la réflexion</h6>
+                    <p><strong>Idée directrice :</strong> À travers cette critique, l’auteur prône l’ouverture d’esprit, la tolérance et une forme de scepticisme philosophique.</p>
+                    <p><strong>Analyse :</strong> Montaigne utilise un style argumentatif clair et direct. La structure de la phrase, simple et concise, lui donne la force d'une maxime. En exposant ce mécanisme de jugement, il incite implicitement à suspendre son jugement hâtif et à considérer l'autre avec plus de curiosité et moins d'arrogance.</p>
+                    <p><strong>Effet :</strong> Le texte dépasse la simple observation pour prendre une dimension pédagogique et humaniste, encourageant une posture intellectuelle plus humble et ouverte face à l'altérité.</p>
+                </div>
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
+            </section>
+
+            <section id="conseils" class="section fade-in">
+                <h2>💡 Conseils de rédaction</h2>
+
+                <h3>Règles de rédaction essentielles :</h3>
+                <ul class="tips-list">
+                    <li><strong>Connecteurs logiques :</strong> de plus, en outre, toutefois, néanmoins</li>
+                    <li><strong>Citations :</strong> entre guillemets avec numéros de lignes</li>
+                    <li><strong>Effets :</strong> expliquez l'impact des procédés sur le lecteur</li>
+                    <li><strong>Évitez la paraphrase :</strong> expliquez et interprétez, ne résumez pas</li>
+                    <li><strong>Analyse approfondie :</strong> dépassez la description pour aller vers l'interprétation</li>
+                </ul>
+
+                <h3>Erreurs fréquentes à éviter :</h3>
+                <div class="warning">
+                    <ul>
+                        <li>❌ Séparer le fond de la forme</li>
+                        <li>❌ Paraphraser le texte</li>
+                        <li>❌ Ignorer la structure du texte</li>
+                        <li>❌ Plan linéaire (suivre l'ordre du texte)</li>
+                        <li>❌ Analyse isolée d'un procédé sans interprétation globale</li>
+                        <li>❌ Baser une sous-partie sur un seul procédé</li>
+                    </ul>
+                </div>
+
+                <h3>Stratégie d'examen :</h3>
+                <div class="highlight-box">
+                    <ol>
+                        <li><strong>Premières minutes :</strong> lire et relire le texte, identifier procédés et thèmes</li>
+                        <li><strong>Plan détaillé :</strong> sur le brouillon, organiser axes et sous-parties</li>
+                        <li><strong>Introduction/Conclusion :</strong> rédiger d'abord sur le brouillon</li>
+                        <li><strong>Relecture régulière :</strong> toutes les 10-15 minutes, pas seulement à la fin</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section id="preparation" class="section fade-in">
+                <h2>📖 Préparation et révisions</h2>
+
+                <h3>Conseils de révision :</h3>
+                <ul class="tips-list">
+                    <li><strong>Fiches de révision :</strong> sur les textes de votre corpus oral avec observations pertinentes</li>
+                    <li><strong>Entraînement problématiques :</strong> compétence importante pour écrit et oral</li>
+                    <li><strong>Maîtrise des procédés :</strong> connaître les effets des procédés littéraires</li>
+                    <li><strong>Pratique régulière :</strong> s'entraîner avec des textes du programme en lien avec leur parcours</li>
+                </ul>
+
+                <h3>Programme 2025 :</h3>
+                <div class="highlight-box">
+                    <p>Le programme inclus des œuvres pour chaque objet d'étude (poésie, roman, théâtre, littérature d'idées), chacune associée à un parcours spécifique. La méthodologie du commentaire doit s'adapter à ces spécificités. Les notes comptent pour le dossier Parcoursup, rendant cet exercice crucial.</p>
+                </div>
+
+                <h3>Ressources supplémentaires :</h3>
+                <ul class="tips-list">
+                    <li>📚 CommentaireComposé.fr : exemples et méthodes détaillées</li>
+                    <li>📖 Le Figaro Étudiant : conseils méthodologiques</li>
+                    <li>🎯 Studyrama : fiches de révision téléchargeables</li>
+                    <li>💡 AuFutur.fr : explications sur les œuvres au programme</li>
+                </ul>
+
+                <div class="success">
+                    <strong>🎯 Objectif final :</strong> Cette méthode structurée, appliquée avec rigueur et régularité, vous permettra d'aborder sereinement cette épreuve décisive pour votre parcours scolaire !
+                </div>
+            </section>
+        </div>
+
+        <button class="back-to-top" onclick="scrollToTop()">↑</button>
+
+        <script>
+            // Animation au scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
             });
-        }, observerOptions);
 
-        document.querySelectorAll('.fade-in').forEach(el => {
-            observer.observe(el);
-        });
+            // Navigation smooth scroll for mobile and desktop
+            const navToggleBtn = document.querySelector('.nav-toggle');
+            const navMenuOverlay = document.querySelector('.nav-menu-overlay');
+            const headerHeight = document.querySelector('header').offsetHeight; // Get dynamic header height
 
-        // Navigation smooth scroll
-        document.querySelectorAll('.nav-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = btn.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    const navHeight = document.querySelector('nav').offsetHeight;
-                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight - 20; 
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = btn.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
 
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
+                    if (targetElement) {
+                        // Close mobile menu if open
+                        if (navMenuOverlay.classList.contains('is-open')) {
+                             navMenuOverlay.classList.remove('is-open');
+                             // Add a small delay before scrolling to allow menu to close
+                             setTimeout(() => {
+                                  scrollToElement(targetElement);
+                             }, 300); // Match CSS transition duration
+                        } else {
+                             // Scroll directly on desktop
+                             scrollToElement(targetElement);
+                        }
+                    }
+                });
             });
-        });
 
+            function scrollToElement(element) {
+                 // Calculate offset for sticky header/nav
+                 const headerOffset = document.querySelector('header').offsetHeight;
+                 // For desktop, the nav is sticky below the header. Need its height too.
+                 const navOffset = window.innerWidth > 768 ? document.querySelector('nav').offsetHeight : 0;
 
-        // Back to top button
-        const backToTopBtn = document.querySelector('.back-to-top');
-        
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                backToTopBtn.classList.add('show');
-            } else {
-                backToTopBtn.classList.remove('show');
+                 // Adjusted offset calculation
+                 const totalOffset = headerOffset + navOffset + 20; // Add 20px extra margin
+
+                 const targetPosition = element.getBoundingClientRect().top + window.pageYOffset - totalOffset;
+
+                 window.scrollTo({
+                     top: targetPosition,
+                     behavior: 'smooth'
+                 });
             }
-        });
 
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
 
-        document.querySelectorAll('.step-card, .procede-card').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'scale(1.05)';
+            // Back to top button
+            const backToTopBtn = document.querySelector('.back-to-top');
+
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
             });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'scale(1)';
+
+            function scrollToTop() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+
+            // Mobile Nav Toggle Functionality
+            if (navToggleBtn && navMenuOverlay) {
+                navToggleBtn.addEventListener('click', () => {
+                    navMenuOverlay.classList.toggle('is-open');
+                });
+            }
+
+
+            // Animation des cartes au hover
+            document.querySelectorAll('.step-card, .procede-card').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'scale(1.05)';
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'scale(1)';
+                });
             });
-        });
-    </script>
-</body>
-</html>
+        </script>
+    </body>
+    </html>
